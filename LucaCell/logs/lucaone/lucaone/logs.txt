@@ -1,0 +1,451 @@
+{"adam_epsilon": 1e-08, "add_special_tokens": true, "best_metric_type": "loss", "beta1": 0.9, "beta2": 0.98, "buffer_size": 10240, "classifier_size": {"token_level": {"gene_mask": 2048, "prot_mask": 2048}, "span_level": {"gene_type": 128, "prot_homo": 4096, "prot_site": 1024, "prot_domain": 10240}, "seq_level": {"gene_taxonomy": 2048, "prot_taxonomy": 2048, "prot_keyword": 2048}, "structure_level": {"prot_structure": 128}}, "decay_rate": 0.9, "delete_old": false, "dev_data_dir": "../dataset/lucagplm/v2.0/dev/", "do_eval": true, "do_lower_case": false, "do_metrics": true, "do_test": true, "do_train": true, "dropout_prob": 0.0, "embed_scale": 1.0, "evaluate_during_training": true, "fp16": false, "fp16_opt_level": "O1", "gene_label_size_dict": {"token_level": {"gene_mask": 39}, "span_level": {"gene_type": 8}, "seq_level": {"gene_taxonomy": 735}}, "gene_mask_classifier_size": 2048, "gene_mask_label_filepath": "../vocab/lucagplm/v2.0/vocab.txt", "gene_mask_loss_type": "cce", "gene_mask_output_mode": "multi_class", "gene_mask_weight": 1.0, "gene_output_keys": {"token_level": ["gene_mask"], "span_level": ["gene_type"], "seq_level": ["gene_taxonomy"]}, "gene_output_mode_dict": {"token_level": {"gene_mask": "multi_class"}, "span_level": {"gene_type": "multi_class"}, "seq_level": {"gene_taxonomy": "multi_class"}}, "gene_taxonomy_classifier_size": 2048, "gene_taxonomy_label_filepath": "../label/lucagplm/v2.0/gene_taxonomy_seq_level_label_v2.txt", "gene_taxonomy_loss_type": "cce", "gene_taxonomy_output_mode": "multi_class", "gene_taxonomy_weight": 0.2, "gene_type_classifier_size": 128, "gene_type_label_filepath": "../label/lucagplm/v2.0/gene_type_span_level_label_v2.txt", "gene_type_loss_type": "cce", "gene_type_output_mode": "multi_class", "gene_type_weight": 0.2, "gradient_accumulation_steps": 32, "hidden_size": 2560, "ignore_index": -100, "label_size": {"token_level": {"gene_mask": 39, "prot_mask": 39}, "span_level": {"gene_type": 8, "prot_homo": 3443, "prot_site": 946, "prot_domain": 13717}, "seq_level": {"gene_taxonomy": 735, "prot_taxonomy": 2196, "prot_keyword": 1179}, "structure_level": {"prot_structure": 3}}, "learning_rate": 0.0002, "local_rank": 0, "log_dir": "../logs/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20231125113045", "logging_steps": 32000, "loss_logging_steps": 1000, "loss_type": {"token_level": {"gene_mask": "cce", "prot_mask": "cce"}, "span_level": {"gene_type": "cce", "prot_homo": "cce", "prot_site": "cce", "prot_domain": "cce"}, "seq_level": {"gene_taxonomy": "cce", "prot_taxonomy": "cce", "prot_keyword": "bce"}, "structure_level": {"prot_structure": "l1"}}, "loss_weights": {"token_level": {"gene_mask": 1.0, "prot_mask": 1.0}, "span_level": {"gene_type": 0.2, "prot_homo": 0.2, "prot_site": 0.2, "prot_domain": 0.2}, "seq_level": {"gene_taxonomy": 0.2, "prot_taxonomy": 0.2, "prot_keyword": 1.0}, "structure_level": {"prot_structure": 1.0}}, "lr_update_steps": 760000, "max_grad_norm": 1.0, "max_length": 1280, "max_steps": 16000000, "model_config": "../config/lucaone_gplm.json", "model_dirpath": null, "model_type": "lucaone_gplm", "multi_loss_strategy": "manual_weight", "n_gpu": 8, "no_cuda": false, "no_position_embeddings": true, "no_token_dropout": true, "no_token_type_embeddings": false, "no_use_embed_layer_norm": true, "no_use_last_layer_norm": false, "non_ignore": null, "num_attention_heads": 40, "num_hidden_layers": 20, "num_train_epochs": 5, "output_dir": "../models/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20231125113045", "output_keys": {"token_level": ["gene_mask", "prot_mask"], "span_level": ["gene_type", "prot_homo", "prot_site", "prot_domain"], "seq_level": ["gene_taxonomy", "prot_taxonomy", "prot_keyword"], "structure_level": ["prot_structure"]}, "output_mode": {"token_level": {"gene_mask": "multi_class", "prot_mask": "multi_class"}, "span_level": {"gene_type": "multi_class", "prot_homo": "multi_class", "prot_site": "multi_class", "prot_domain": "multi_class"}, "seq_level": {"gene_taxonomy": "multi_class", "prot_taxonomy": "multi_class", "prot_keyword": "multi_label"}, "structure_level": {"prot_structure": "regression"}}, "padding": "right", "pair_label_size_dict": {}, "pair_output_keys": {}, "pair_output_mode_dict": {}, "per_gpu_eval_batch_size": 1, "per_gpu_train_batch_size": 1, "pooling_type": {"token_level": {"gene_mask": "value_attention", "prot_mask": "value_attention"}, "span_level": {"gene_type": "value_attention", "prot_homo": "value_attention", "prot_site": "value_attention", "prot_domain": "value_attention"}, "seq_level": {"gene_taxonomy": "value_attention", "prot_taxonomy": "value_attention", "prot_keyword": "value_attention"}, "structure_level": {"prot_structure": "value_attention"}}, "pos_weight": null, "pretrain_task_level_name": "gene_mask,gene_type,gene_taxonomy,prot_mask,prot_site,prot_homo,prot_domain,prot_taxonomy,prot_keyword,prot_structure", "pretrain_task_level_type": ["token_level", "span_level", "seq_level", "structure_level"], "pretrain_tasks": {"token_level": ["gene_mask", "prot_mask"], "span_level": ["gene_type", "prot_homo", "prot_site", "prot_domain"], "seq_level": ["gene_taxonomy", "prot_taxonomy", "prot_keyword"], "structure_level": ["prot_structure"]}, "pretrained_model_name": "esm2_t36_3B_UR50D", "prot_contact_classifier_size": 3072, "prot_contact_label_filepath": null, "prot_contact_loss_type": "mae", "prot_contact_output_mode": null, "prot_contact_weight": 1.0, "prot_domain_classifier_size": 10240, "prot_domain_label_filepath": "../label/lucagplm/v2.0/prot_domain_span_level_label_v2.txt", "prot_domain_loss_type": "cce", "prot_domain_output_mode": "multi_class", "prot_domain_weight": 0.2, "prot_homo_classifier_size": 4096, "prot_homo_label_filepath": "../label/lucagplm/v2.0/prot_homo_span_level_label_v2.txt", "prot_homo_loss_type": "cce", "prot_homo_output_mode": "multi_class", "prot_homo_weight": 0.2, "prot_keyword_classifier_size": 2048, "prot_keyword_label_filepath": "../label/lucagplm/v2.0/prot_keyword_seq_level_label_v2.txt", "prot_keyword_loss_type": "bce", "prot_keyword_output_mode": "multi_label", "prot_keyword_weight": 1.0, "prot_label_size_dict": {"token_level": {"prot_mask": 39}, "span_level": {"prot_homo": 3443, "prot_site": 946, "prot_domain": 13717}, "seq_level": {"prot_taxonomy": 2196, "prot_keyword": 1179}, "structure_level": {"prot_structure": 3}}, "prot_mask_classifier_size": 2048, "prot_mask_label_filepath": "../vocab/lucagplm/v2.0/vocab.txt", "prot_mask_loss_type": "cce", "prot_mask_output_mode": "multi_class", "prot_mask_weight": 1.0, "prot_output_keys": {"token_level": ["prot_mask"], "span_level": ["prot_homo", "prot_site", "prot_domain"], "seq_level": ["prot_taxonomy", "prot_keyword"], "structure_level": ["prot_structure"]}, "prot_output_mode_dict": {"token_level": {"prot_mask": "multi_class"}, "span_level": {"prot_homo": "multi_class", "prot_site": "multi_class", "prot_domain": "multi_class"}, "seq_level": {"prot_taxonomy": "multi_class", "prot_keyword": "multi_label"}, "structure_level": {"prot_structure": "regression"}}, "prot_secondary_classifier_size": 3072, "prot_secondary_label_filepath": null, "prot_secondary_loss_type": "mae", "prot_secondary_output_mode": null, "prot_secondary_weight": 1.0, "prot_site_classifier_size": 1024, "prot_site_label_filepath": "../label/lucagplm/v2.0/prot_site_span_level_label_v2.txt", "prot_site_loss_type": "cce", "prot_site_output_mode": "multi_class", "prot_site_weight": 0.2, "prot_structure_classifier_size": 128, "prot_structure_label_filepath": "../label/lucagplm/v2.0/prot_structure_structure_level_label_v2.txt", "prot_structure_loss_type": "l1", "prot_structure_output_mode": "regression", "prot_structure_weight": 1.0, "prot_taxonomy_classifier_size": 2048, "prot_taxonomy_label_filepath": "../label/lucagplm/v2.0/prot_taxonomy_seq_level_label_v2.txt", "prot_taxonomy_loss_type": "cce", "prot_taxonomy_output_mode": "multi_class", "prot_taxonomy_weight": 0.2, "save_all": true, "save_steps": 200000, "scheduler_type": "step", "seed": 1111, "sigmoid": {"token_level": {"gene_mask": false, "prot_mask": false}, "span_level": {"gene_type": false, "prot_homo": false, "prot_site": false, "prot_domain": false}, "seq_level": {"gene_taxonomy": false, "prot_taxonomy": false, "prot_keyword": true}, "structure_level": {"prot_structure": false}}, "start_epoch": 2, "tb_log_dir": "../tb-logs/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20231125113045", "test_data_dir": "../dataset/lucagplm/v2.0/test/", "tokenization": false, "tokenizer_dir": "../vocab/lucagplm/v2.0/vocab.txt", "train_data_dir": "../dataset/lucagplm/v2.0/train/", "trans_classifier_size": 128, "trans_label_filepath": "../label/lucagplm/v2.0/trans_pair_level_label_v2.txt", "trans_loss_type": "bce", "trans_output_mode": "binary_class", "trans_weight": 1.0, "truncation": "right", "vocab_path": "../vocab/lucagplm/v2.0/vocab.txt", "vocab_size": 39, "warmup_steps": 64000, "weight_decay": 0.01, "worker_num": 8}
+##################################################
+n_gpu: 8
+##################################################
+gene/prot token level/gene_mask label num: 39
+gene/prot token level/prot_mask label num: 39
+gene span level/gene_type label num: 8
+prot span level/prot_homo label num: 3443
+prot span level/prot_site label num: 946
+prot span level/prot_domain label num: 13717
+gene seq level/gene_taxonomy label num: 735
+prot seq level/prot_taxonomy label num: 2196
+prot seq level/prot_keyword label num: 1179
+prot structure level/prot_structure num labels: 3
+##################################################
+Encoder Config:
+ {'add_special_tokens': True, 'max_length': 1280, 'truncation': 'right', 'padding': 'right', 'tokenizer_dir': '../vocab/lucagplm/v2.0/vocab.txt', 'vocab_path': '../vocab/lucagplm/v2.0/vocab.txt', 'vocab_size': 39}
+##################################################
+Model Config:
+ LucaGPLMConfig {
+  "alphabet": "gene_prot",
+  "architectures": [
+    "LucaOneGPLM"
+  ],
+  "attention_probs_dropout_prob": 0.0,
+  "bos_token_id": 2,
+  "classifier_dropout": 0.0,
+  "classifier_dropout_prob": 0.0,
+  "classifier_hidden_act": "gelu",
+  "embed_scale": 1.0,
+  "eos_token_id": 3,
+  "gene_mask_classifier_output_size": 2048,
+  "gene_mask_label_num": 39,
+  "gene_taxonomy_classifier_output_size": 2048,
+  "gene_taxonomy_label_num": 735,
+  "gene_type_classifier_output_size": 128,
+  "gene_type_label_num": 8,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.0,
+  "hidden_size": 2560,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1",
+    "2": "LABEL_2"
+  },
+  "ignore_index": -100,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1,
+    "LABEL_2": 2
+  },
+  "mask_token_id": 4,
+  "max_position_embeddings": 1280,
+  "no_position_embeddings": true,
+  "no_token_type_embeddings": false,
+  "num_attention_heads": 40,
+  "num_hidden_layers": 20,
+  "pad_token_id": 0,
+  "prot_contact_classifier_output_size": 3072,
+  "prot_domain_classifier_output_size": 10240,
+  "prot_domain_label_num": 13717,
+  "prot_homo_classifier_output_size": 4096,
+  "prot_homo_label_num": 3443,
+  "prot_keyword_classifier_output_size": 2048,
+  "prot_keyword_label_num": 1179,
+  "prot_mask_classifier_output_size": 2048,
+  "prot_mask_label_num": 39,
+  "prot_secondary_classifier_output_size": 3072,
+  "prot_site_classifier_output_size": 1024,
+  "prot_site_label_num": 946,
+  "prot_structure_classifier_output_size": 128,
+  "prot_structure_label_num": 3,
+  "prot_taxonomy_classifier_output_size": 2048,
+  "prot_taxonomy_label_num": 2196,
+  "sep_token_id": 3,
+  "token_dropout": false,
+  "trans_classifier_output_size": 128,
+  "transformers_version": "4.26.0",
+  "type_vocab_size": 2,
+  "unk_token_id": 1,
+  "use_embed_layer_norm": false,
+  "use_last_layer_norm": true,
+  "vocab_size": 39
+}
+
+##################################################
+Mode Architecture:
+ LucaGPLM(
+  (embed_tokens): Embedding(39, 2560, padding_idx=0)
+  (embed_type): Embedding(2, 2560)
+  (layers): ModuleList(
+    (0): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (1): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (2): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (3): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (4): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (5): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (6): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (7): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (8): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (9): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (10): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (11): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (12): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (13): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (14): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (15): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (16): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (17): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (18): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+    (19): LucaGPLMTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaGPLMMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): RotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+  )
+  (contact_head): ContactPredictionHead(
+    (regression): Linear(in_features=800, out_features=1, bias=True)
+    (activation): Sigmoid()
+  )
+  (last_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+  (lm_head): RobertaLMHead(
+    (dense): Linear(in_features=2560, out_features=2560, bias=True)
+    (layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+  )
+  (hidden_layer_list): ModuleList(
+    (0): Linear(in_features=2560, out_features=128, bias=True)
+    (1): Linear(in_features=2560, out_features=4096, bias=True)
+    (2): Linear(in_features=2560, out_features=1024, bias=True)
+    (3): Linear(in_features=2560, out_features=10240, bias=True)
+    (4): Linear(in_features=2560, out_features=2048, bias=True)
+    (5): Linear(in_features=2560, out_features=2048, bias=True)
+    (6): Linear(in_features=2560, out_features=2048, bias=True)
+    (7): Linear(in_features=2560, out_features=128, bias=True)
+  )
+  (hidden_act_list): ModuleList(
+    (0): GELU(approximate='none')
+    (1): GELU(approximate='none')
+    (2): GELU(approximate='none')
+    (3): GELU(approximate='none')
+    (4): GELU(approximate='none')
+    (5): GELU(approximate='none')
+    (6): GELU(approximate='none')
+    (7): GELU(approximate='none')
+  )
+  (classifier_dropout_list): ModuleList(
+    (0): Dropout(p=0.0, inplace=False)
+    (1): Dropout(p=0.0, inplace=False)
+    (2): Dropout(p=0.0, inplace=False)
+    (3): Dropout(p=0.0, inplace=False)
+    (4): Dropout(p=0.0, inplace=False)
+    (5): Dropout(p=0.0, inplace=False)
+    (6): Dropout(p=0.0, inplace=False)
+    (7): Dropout(p=0.0, inplace=False)
+  )
+  (classifier_list): ModuleList(
+    (0): Linear(in_features=128, out_features=8, bias=True)
+    (1): Linear(in_features=4096, out_features=3443, bias=True)
+    (2): Linear(in_features=1024, out_features=946, bias=True)
+    (3): Linear(in_features=10240, out_features=13717, bias=True)
+    (4): Linear(in_features=2048, out_features=735, bias=True)
+    (5): Linear(in_features=2048, out_features=2196, bias=True)
+    (6): Linear(in_features=2048, out_features=1179, bias=True)
+    (7): Linear(in_features=128, out_features=3, bias=True)
+  )
+  (output_list): ModuleList(
+    (0): Softmax(dim=-1)
+    (1): Softmax(dim=-1)
+    (2): Softmax(dim=-1)
+    (3): Softmax(dim=-1)
+    (4): Softmax(dim=-1)
+    (5): Softmax(dim=-1)
+    (6): Softmax(dim=-1)
+    (7): Softmax(dim=-1)
+    (8): Sigmoid()
+  )
+  (loss_fct_list): ModuleList(
+    (0): MaskedCrossEntropyLoss(
+      (criterion): CrossEntropyLoss()
+    )
+    (1): MaskedCrossEntropyLoss(
+      (criterion): CrossEntropyLoss()
+    )
+    (2): MaskedCrossEntropyLoss(
+      (criterion): CrossEntropyLoss()
+    )
+    (3): MaskedCrossEntropyLoss(
+      (criterion): CrossEntropyLoss()
+    )
+    (4): MaskedCrossEntropyLoss(
+      (criterion): CrossEntropyLoss()
+    )
+    (5): MaskedCrossEntropyLoss(
+      (criterion): CrossEntropyLoss()
+    )
+    (6): MaskedCrossEntropyLoss(
+      (criterion): CrossEntropyLoss()
+    )
+    (7): MaskedCrossEntropyLoss(
+      (criterion): CrossEntropyLoss()
+    )
+    (8): MaskedBCEWithLogitsLoss(
+      (criterion): BCEWithLogitsLoss()
+    )
+    (9): MaskedL1Loss(
+      (criterion): L1Loss()
+    )
+  )
+)
+##################################################
+Model parameters: 1799903387 
+##################################################
+{"total_num": "1716.520000M", "total_size": "6866.090000MB", "param_sum": "1716.520000M", "param_size": "6866.090000MB", "buffer_sum": "0.000000M", "buffer_size": "0.000000MB", "trainable_num": "1716.520000M", "trainable_size": "6866.090000MB"}
+##################################################
+

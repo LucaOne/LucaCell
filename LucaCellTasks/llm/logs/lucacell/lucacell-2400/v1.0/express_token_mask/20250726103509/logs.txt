@@ -1,0 +1,1716 @@
+{"adam_epsilon": 1e-08, "add_special_tokens": true, "alphabet_type": "nucleotide", "attention_probs_dropout_prob": 0.05, "best_metric_type": "loss", "beta1": 0.9, "beta2": 0.98, "buffer_size": 1024000, "decay_rate": 0.9, "do_eval": true, "do_metrics": true, "do_test": true, "do_train": true, "dropout_prob": 0.0, "embed_dim": 2560, "embed_scale": 1.0, "embedding_buffer_size": 2048000, "epoch_loss": 0, "eval_start_epoch": 1, "evaluate_during_training": true, "express_bin_list_filepath": "../meta/express_bin_list_2400.meta", "express_sorted_list_filepath": null, "ffn_size": 10240, "fp16": false, "fp16_opt_level": "O1", "gene_id_list_filepath": null, "global_loss": 0, "global_nucleotide_seq_embeddings_dirpath": "../../embedding/lucaone-gene/meta/hg38.ensGene_genes/mean_vector_2400/;../../embedding/lucaone-gene/meta/mm10.ensGene_genes/mean_vector_2400/", "global_nucleotide_seqs_filepath": "../meta/hg38.ensGene_genes_rename_2400.fasta;../meta/mm10.ensGene_genes_rename_2400.fasta", "gradient_accumulation_steps": 32, "ignore_index": -100, "learning_rate": 0.00025, "local_rank": 0, "log_dir": "../logs/lucacell-2400/v1.0/express_token_mask/lucacell/20250726103509", "logging_steps": 1000, "loss_logging_steps": 1000, "lr_update_steps": 30000, "max_express_sorted_position_embeddings": 100, "max_gene_seq_length": 2402, "max_grad_norm": 1.0, "max_nucleotide_seq_length": 3074, "max_steps": 10000000, "model_config": "../config/lucacell.json", "model_dirpath": null, "model_type": "lucacell", "n_gpu": 8, "no_cuda": false, "no_express_sorted_embeddings": true, "no_gene_positions_embeddings": true, "no_gene_type_embeddings": true, "no_nucleotide_position_embeddings": true, "no_nucleotide_token_embeddings": true, "no_nucleotide_token_encoder": true, "nucleotide_input_type": "embedding_vector", "nucleotide_token_encoder_num_attention_heads": 0, "nucleotide_token_encoder_num_layers": 0, "nucleotide_token_pooling_type": "mean", "num_attention_heads": 40, "num_layers": 20, "num_train_epochs": 3, "output_dir": "../models/lucacell-2400/v1.0/express_token_mask/lucacell/20250726103509", "output_mode": {"express_value_mask": "multi_class"}, "per_gpu_eval_batch_size": 1, "per_gpu_train_batch_size": 1, "pretrain_task_name": "express_token_mask", "pretrain_task_weight": {"express_token_mask": 1.0}, "pretrained_model_name": "lucaone-gene", "processed_sample_cnt": 100000, "removed_continue": false, "save_steps": 100000, "scheduler_type": "step", "seed": 1111, "tb_log_dir": "../tb-logs/lucacell-2400/v1.0/express_token_mask/lucacell/20250726103509", "test_data_dir": "../dataset/lucacell-2400/v1.0/test/", "time_str": "20250726103509", "train_data_dir": "../dataset/lucacell-2400/v1.0/train/", "trained_checkpoint": null, "trained_epoch": null, "truncation": "right", "use_embed_layer_norm": false, "use_last_layer_norm": true, "use_rotary_embeddings": true, "val_data_dir": "../dataset/lucacell-2400/v1.0/val/", "warmup_steps": 32000, "weight_decay": 0.01, "worker_num": 1}
+##################################################
+n_gpu: 8
+##################################################
+Encoder Config:
+ {'add_special_tokens': True, 'truncation': 'right'}
+##################################################
+Model Config:
+ LucaCellConfig {
+  "alphabet_type": "nucleotide",
+  "architectures": [
+    "LucaCell"
+  ],
+  "attention_probs_dropout_prob": 0.05,
+  "embed_dim": 2560,
+  "embed_scale": 1.0,
+  "ffn_size": 10240,
+  "hidden_dropout_prob": 0.0,
+  "ignore_index": -100,
+  "max_express_sorted_position_embeddings": 105,
+  "max_gene_position_embeddings": 2403,
+  "max_gene_seq_length": 2402,
+  "max_nucleotide_position_embeddings": 3075,
+  "max_nucleotide_seq_length": 3074,
+  "model_type": "LucaCell",
+  "no_express_sorted_embeddings": true,
+  "no_gene_positions_embeddings": true,
+  "no_gene_type_embeddings": true,
+  "no_nucleotide_position_embeddings": true,
+  "no_nucleotide_token_embeddings": true,
+  "no_nucleotide_token_encoder": true,
+  "nucleotide_input_type": "embedding_vector",
+  "nucleotide_token_encoder_num_attention_heads": 0,
+  "nucleotide_token_encoder_num_layers": 0,
+  "nucleotide_token_pooling_type": "mean",
+  "num_attention_heads": 40,
+  "num_layers": 20,
+  "pretrain_task_name": "express_token_mask",
+  "pretrain_task_weight": {
+    "express_token_mask": 1.0
+  },
+  "pretrained_model_name": "lucaone-gene",
+  "transformers_version": "4.41.2",
+  "use_embed_layer_norm": false,
+  "use_last_layer_norm": true,
+  "use_rotary_embeddings": true
+}
+
+##################################################
+Mode Architecture:
+ LucaCell(
+  (gene_tokens_embed): Embedding(5, 2560, padding_idx=0)
+  (express_tokens_embed): Embedding(85, 2560, padding_idx=0)
+  (layers): ModuleList(
+    (0-19): 20 x LucaTransformerLayer(
+      (pre_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (self_attn): LucaMultiheadAttention(
+        (k_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (v_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (q_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (out_proj): Linear(in_features=2560, out_features=2560, bias=True)
+        (rot_emb): LucaRotaryEmbedding()
+      )
+      (post_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+      (fc1): Linear(in_features=2560, out_features=10240, bias=True)
+      (fc2): Linear(in_features=10240, out_features=2560, bias=True)
+    )
+  )
+  (last_layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+  (express_lm_head): LucaRobertaLMHead(
+    (dense): Linear(in_features=2560, out_features=2560, bias=True)
+    (layer_norm): LayerNorm((2560,), eps=1e-05, elementwise_affine=True)
+  )
+  (mask_express_token_loss_fct): CrossEntropyLoss()
+)
+##################################################
+Model parameters: 1580326485 
+##################################################
+{"total_num": "1507.120000M", "total_size": "6028.470000MB", "param_sum": "1507.120000M", "param_size": "6028.470000MB", "buffer_sum": "0.000000M", "buffer_size": "0.000000MB", "trainable_num": "1507.120000M", "trainable_size": "6028.470000MB"}
+##################################################
+Training, Epoch: 0001, Batch: 004000, Sample Num: 4000, Cur Loss: 5.57112026, Log Avg loss: 30.93702026, Global Avg Loss: 30.93702026, Time: 0.7861
+Steps: 4000, Updated lr: 0.000031
+Training, Epoch: 0001, Batch: 008000, Sample Num: 8000, Cur Loss: 10.26065350, Log Avg loss: 8.01905742, Global Avg Loss: 19.47803884, Time: 1.7743
+Steps: 8000, Updated lr: 0.000063
+Training, Epoch: 0001, Batch: 012000, Sample Num: 12000, Cur Loss: 14.30809689, Log Avg loss: 9.91281833, Global Avg Loss: 16.28963200, Time: 1.7485
+Steps: 12000, Updated lr: 0.000094
+Training, Epoch: 0001, Batch: 016000, Sample Num: 16000, Cur Loss: 10.58990383, Log Avg loss: 10.32310974, Global Avg Loss: 14.79800144, Time: 0.9934
+Steps: 16000, Updated lr: 0.000125
+Training, Epoch: 0001, Batch: 020000, Sample Num: 20000, Cur Loss: 7.80890512, Log Avg loss: 8.34165409, Global Avg Loss: 13.50673197, Time: 0.8724
+Steps: 20000, Updated lr: 0.000156
+Training, Epoch: 0001, Batch: 024000, Sample Num: 24000, Cur Loss: 7.22728157, Log Avg loss: 7.82344182, Global Avg Loss: 12.55951694, Time: 1.7342
+Steps: 24000, Updated lr: 0.000188
+Training, Epoch: 0001, Batch: 028000, Sample Num: 28000, Cur Loss: 7.25050020, Log Avg loss: 7.45668645, Global Avg Loss: 11.83054116, Time: 0.6388
+Steps: 28000, Updated lr: 0.000219
+Training, Epoch: 0001, Batch: 032000, Sample Num: 32000, Cur Loss: 5.76462746, Log Avg loss: 7.15498496, Global Avg Loss: 11.24609663, Time: 1.4443
+Steps: 32000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 036000, Sample Num: 36000, Cur Loss: 6.03051567, Log Avg loss: 6.23537542, Global Avg Loss: 10.68934983, Time: 1.6390
+Steps: 36000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 040000, Sample Num: 40000, Cur Loss: 5.51617002, Log Avg loss: 5.69738774, Global Avg Loss: 10.19015362, Time: 0.6128
+Steps: 40000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 044000, Sample Num: 44000, Cur Loss: 4.72302151, Log Avg loss: 4.39695544, Global Avg Loss: 9.66349924, Time: 0.9939
+Steps: 44000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 048000, Sample Num: 48000, Cur Loss: 4.66483831, Log Avg loss: 4.23597580, Global Avg Loss: 9.21120562, Time: 0.9975
+Steps: 48000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 052000, Sample Num: 52000, Cur Loss: 3.59553146, Log Avg loss: 4.12885667, Global Avg Loss: 8.82025570, Time: 0.6122
+Steps: 52000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 056000, Sample Num: 56000, Cur Loss: 4.24385309, Log Avg loss: 3.98013629, Global Avg Loss: 8.47453289, Time: 1.6262
+Steps: 56000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 060000, Sample Num: 60000, Cur Loss: 4.37856150, Log Avg loss: 3.97260632, Global Avg Loss: 8.17440445, Time: 1.8254
+Steps: 60000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 064000, Sample Num: 64000, Cur Loss: 3.55869460, Log Avg loss: 3.95586513, Global Avg Loss: 7.91074574, Time: 1.1038
+Steps: 64000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 068000, Sample Num: 68000, Cur Loss: 4.24381304, Log Avg loss: 3.86000905, Global Avg Loss: 7.67246711, Time: 1.2527
+Steps: 68000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 072000, Sample Num: 72000, Cur Loss: 3.89529395, Log Avg loss: 3.80275616, Global Avg Loss: 7.45748317, Time: 0.8876
+Steps: 72000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 076000, Sample Num: 76000, Cur Loss: 2.92097640, Log Avg loss: 3.78517495, Global Avg Loss: 7.26420379, Time: 1.4724
+Steps: 76000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 080000, Sample Num: 80000, Cur Loss: 3.58665705, Log Avg loss: 3.82553159, Global Avg Loss: 7.09227018, Time: 0.7073
+Steps: 80000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 084000, Sample Num: 84000, Cur Loss: 4.15402555, Log Avg loss: 3.75102715, Global Avg Loss: 6.93316337, Time: 2.1935
+Steps: 84000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 088000, Sample Num: 88000, Cur Loss: 4.07672310, Log Avg loss: 3.71693979, Global Avg Loss: 6.78697139, Time: 1.8378
+Steps: 88000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 092000, Sample Num: 92000, Cur Loss: 4.11351681, Log Avg loss: 3.71404936, Global Avg Loss: 6.65336608, Time: 1.0837
+Steps: 92000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 096000, Sample Num: 96000, Cur Loss: 3.98247361, Log Avg loss: 3.71804618, Global Avg Loss: 6.53106109, Time: 1.8108
+Steps: 96000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 100000, Sample Num: 100000, Cur Loss: 4.34857559, Log Avg loss: 3.68151377, Global Avg Loss: 6.41707919, Time: 1.0210
+Steps: 100000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 104000, Sample Num: 104000, Cur Loss: 2.97983599, Log Avg loss: 3.65683711, Global Avg Loss: 6.31091604, Time: 0.6185
+Steps: 104000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 108000, Sample Num: 108000, Cur Loss: 4.01443338, Log Avg loss: 3.63679327, Global Avg Loss: 6.21187445, Time: 2.3130
+Steps: 108000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 112000, Sample Num: 112000, Cur Loss: 3.31574368, Log Avg loss: 3.63346471, Global Avg Loss: 6.11978839, Time: 1.4346
+Steps: 112000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 116000, Sample Num: 116000, Cur Loss: 3.55499983, Log Avg loss: 3.62046630, Global Avg Loss: 6.03360487, Time: 1.2689
+Steps: 116000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 120000, Sample Num: 120000, Cur Loss: 3.70878792, Log Avg loss: 3.58826542, Global Avg Loss: 5.95209356, Time: 1.7768
+Steps: 120000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 124000, Sample Num: 124000, Cur Loss: 3.95127153, Log Avg loss: 3.57437215, Global Avg Loss: 5.87539287, Time: 1.6468
+Steps: 124000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 128000, Sample Num: 128000, Cur Loss: 4.05244112, Log Avg loss: 3.56723605, Global Avg Loss: 5.80326296, Time: 2.0364
+Steps: 128000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 132000, Sample Num: 132000, Cur Loss: 3.67030978, Log Avg loss: 3.56002862, Global Avg Loss: 5.73528617, Time: 1.5583
+Steps: 132000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 136000, Sample Num: 136000, Cur Loss: 2.63305974, Log Avg loss: 3.53992336, Global Avg Loss: 5.67071667, Time: 1.5265
+Steps: 136000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 140000, Sample Num: 140000, Cur Loss: 2.40802002, Log Avg loss: 3.54371387, Global Avg Loss: 5.60994516, Time: 1.3640
+Steps: 140000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 144000, Sample Num: 144000, Cur Loss: 3.24794459, Log Avg loss: 3.50078441, Global Avg Loss: 5.55135737, Time: 0.7819
+Steps: 144000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 148000, Sample Num: 148000, Cur Loss: 3.63429785, Log Avg loss: 3.54187744, Global Avg Loss: 5.49704710, Time: 0.9896
+Steps: 148000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 152000, Sample Num: 152000, Cur Loss: 4.04313469, Log Avg loss: 3.49923616, Global Avg Loss: 5.44447312, Time: 1.7690
+Steps: 152000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 156000, Sample Num: 156000, Cur Loss: 3.79385257, Log Avg loss: 3.50555170, Global Avg Loss: 5.39475719, Time: 0.9055
+Steps: 156000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 160000, Sample Num: 160000, Cur Loss: 3.23487926, Log Avg loss: 3.49314318, Global Avg Loss: 5.34721684, Time: 1.0521
+Steps: 160000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 164000, Sample Num: 164000, Cur Loss: 3.60223985, Log Avg loss: 3.48551994, Global Avg Loss: 5.30180960, Time: 0.8235
+Steps: 164000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 168000, Sample Num: 168000, Cur Loss: 3.95857453, Log Avg loss: 3.49359050, Global Avg Loss: 5.25875676, Time: 1.0816
+Steps: 168000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 172000, Sample Num: 172000, Cur Loss: 4.04422188, Log Avg loss: 3.47501020, Global Avg Loss: 5.21727429, Time: 1.0843
+Steps: 172000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 176000, Sample Num: 176000, Cur Loss: 3.32084250, Log Avg loss: 3.47142731, Global Avg Loss: 5.17759594, Time: 1.3191
+Steps: 176000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 180000, Sample Num: 180000, Cur Loss: 4.06410408, Log Avg loss: 3.46320054, Global Avg Loss: 5.13949827, Time: 1.0545
+Steps: 180000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 184000, Sample Num: 184000, Cur Loss: 3.91317296, Log Avg loss: 3.46126114, Global Avg Loss: 5.10301485, Time: 1.0840
+Steps: 184000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 188000, Sample Num: 188000, Cur Loss: 3.35771966, Log Avg loss: 3.47442559, Global Avg Loss: 5.06836402, Time: 1.4796
+Steps: 188000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 192000, Sample Num: 192000, Cur Loss: 2.92701340, Log Avg loss: 3.45009320, Global Avg Loss: 5.03465004, Time: 1.5182
+Steps: 192000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 196000, Sample Num: 196000, Cur Loss: 4.06268501, Log Avg loss: 3.42769661, Global Avg Loss: 5.00185507, Time: 1.3097
+Steps: 196000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 200000, Sample Num: 200000, Cur Loss: 4.13284397, Log Avg loss: 3.42301578, Global Avg Loss: 4.97027829, Time: 1.0432
+Steps: 200000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 204000, Sample Num: 204000, Cur Loss: 3.79460526, Log Avg loss: 3.42101410, Global Avg Loss: 4.93990056, Time: 1.0870
+Steps: 204000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 208000, Sample Num: 208000, Cur Loss: 3.03209090, Log Avg loss: 3.42407407, Global Avg Loss: 4.91075005, Time: 0.7181
+Steps: 208000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 212000, Sample Num: 212000, Cur Loss: 2.79323387, Log Avg loss: 3.42456921, Global Avg Loss: 4.88270890, Time: 1.6606
+Steps: 212000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 216000, Sample Num: 216000, Cur Loss: 3.32185960, Log Avg loss: 3.39510921, Global Avg Loss: 4.85516076, Time: 0.7120
+Steps: 216000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 220000, Sample Num: 220000, Cur Loss: 3.79707813, Log Avg loss: 3.39833420, Global Avg Loss: 4.82867300, Time: 1.0823
+Steps: 220000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 224000, Sample Num: 224000, Cur Loss: 3.41433644, Log Avg loss: 3.37404287, Global Avg Loss: 4.80269747, Time: 0.9249
+Steps: 224000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 228000, Sample Num: 228000, Cur Loss: 3.92650843, Log Avg loss: 3.36396309, Global Avg Loss: 4.77745651, Time: 2.1224
+Steps: 228000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 232000, Sample Num: 232000, Cur Loss: 3.89544010, Log Avg loss: 3.35739856, Global Avg Loss: 4.75297275, Time: 1.1870
+Steps: 232000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 236000, Sample Num: 236000, Cur Loss: 4.10021591, Log Avg loss: 3.36590452, Global Avg Loss: 4.72946312, Time: 1.0879
+Steps: 236000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 240000, Sample Num: 240000, Cur Loss: 3.71831179, Log Avg loss: 3.34438049, Global Avg Loss: 4.70637841, Time: 0.9234
+Steps: 240000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 244000, Sample Num: 244000, Cur Loss: 3.92347741, Log Avg loss: 3.31105691, Global Avg Loss: 4.68350429, Time: 1.3543
+Steps: 244000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 248000, Sample Num: 248000, Cur Loss: 2.63028193, Log Avg loss: 3.23818898, Global Avg Loss: 4.66019275, Time: 0.5759
+Steps: 248000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 252000, Sample Num: 252000, Cur Loss: 3.24502039, Log Avg loss: 3.25021497, Global Avg Loss: 4.63781215, Time: 1.2465
+Steps: 252000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 256000, Sample Num: 256000, Cur Loss: 3.53013110, Log Avg loss: 3.18775894, Global Avg Loss: 4.61515507, Time: 1.1812
+Steps: 256000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 260000, Sample Num: 260000, Cur Loss: 3.87337732, Log Avg loss: 3.14303680, Global Avg Loss: 4.59250710, Time: 1.0632
+Steps: 260000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 264000, Sample Num: 264000, Cur Loss: 3.33380985, Log Avg loss: 3.06938079, Global Avg Loss: 4.56942943, Time: 0.9636
+Steps: 264000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 268000, Sample Num: 268000, Cur Loss: 2.48561525, Log Avg loss: 3.03215100, Global Avg Loss: 4.54648497, Time: 1.3107
+Steps: 268000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 272000, Sample Num: 272000, Cur Loss: 2.91805601, Log Avg loss: 2.94068394, Global Avg Loss: 4.52287025, Time: 0.8199
+Steps: 272000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 276000, Sample Num: 276000, Cur Loss: 1.95849764, Log Avg loss: 2.86950776, Global Avg Loss: 4.49890848, Time: 1.5187
+Steps: 276000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 280000, Sample Num: 280000, Cur Loss: 3.90613198, Log Avg loss: 2.84813653, Global Avg Loss: 4.47532602, Time: 2.1503
+Steps: 280000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 284000, Sample Num: 284000, Cur Loss: 2.70056963, Log Avg loss: 2.75423959, Global Avg Loss: 4.45108537, Time: 0.8121
+Steps: 284000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 288000, Sample Num: 288000, Cur Loss: 1.95752144, Log Avg loss: 2.73173790, Global Avg Loss: 4.42720554, Time: 1.1740
+Steps: 288000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 292000, Sample Num: 292000, Cur Loss: 2.33614087, Log Avg loss: 2.69752039, Global Avg Loss: 4.40351122, Time: 0.7147
+Steps: 292000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 296000, Sample Num: 296000, Cur Loss: 2.47792506, Log Avg loss: 2.63818275, Global Avg Loss: 4.37965543, Time: 2.0246
+Steps: 296000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 300000, Sample Num: 300000, Cur Loss: 1.91883159, Log Avg loss: 2.60043841, Global Avg Loss: 4.35593254, Time: 1.3495
+Steps: 300000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 304000, Sample Num: 304000, Cur Loss: 3.87119913, Log Avg loss: 2.56873951, Global Avg Loss: 4.33241684, Time: 1.0877
+Steps: 304000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 308000, Sample Num: 308000, Cur Loss: 2.14762878, Log Avg loss: 2.53589132, Global Avg Loss: 4.30908534, Time: 0.6505
+Steps: 308000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 312000, Sample Num: 312000, Cur Loss: 2.87604022, Log Avg loss: 2.49318981, Global Avg Loss: 4.28580463, Time: 2.2055
+Steps: 312000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 316000, Sample Num: 316000, Cur Loss: 2.18094563, Log Avg loss: 2.47962302, Global Avg Loss: 4.26294157, Time: 0.6898
+Steps: 316000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 320000, Sample Num: 320000, Cur Loss: 3.43669367, Log Avg loss: 2.45154446, Global Avg Loss: 4.24029911, Time: 0.9405
+Steps: 320000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 324000, Sample Num: 324000, Cur Loss: 1.69248593, Log Avg loss: 2.39428993, Global Avg Loss: 4.21750887, Time: 1.1250
+Steps: 324000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 328000, Sample Num: 328000, Cur Loss: 1.65091920, Log Avg loss: 2.37104163, Global Avg Loss: 4.19499098, Time: 1.6978
+Steps: 328000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 332000, Sample Num: 332000, Cur Loss: 3.23339868, Log Avg loss: 2.34147297, Global Avg Loss: 4.17265943, Time: 1.0849
+Steps: 332000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 336000, Sample Num: 336000, Cur Loss: 3.52452707, Log Avg loss: 2.32088027, Global Avg Loss: 4.15061444, Time: 1.0819
+Steps: 336000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 340000, Sample Num: 340000, Cur Loss: 2.31446147, Log Avg loss: 2.30430368, Global Avg Loss: 4.12889314, Time: 1.4439
+Steps: 340000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 344000, Sample Num: 344000, Cur Loss: 3.76293850, Log Avg loss: 2.26088679, Global Avg Loss: 4.10717214, Time: 2.0057
+Steps: 344000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 348000, Sample Num: 348000, Cur Loss: 1.14594042, Log Avg loss: 2.24560878, Global Avg Loss: 4.08577486, Time: 0.5068
+Steps: 348000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 352000, Sample Num: 352000, Cur Loss: 1.60554945, Log Avg loss: 2.23905751, Global Avg Loss: 4.06478943, Time: 0.5634
+Steps: 352000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 356000, Sample Num: 356000, Cur Loss: 1.28878713, Log Avg loss: 2.22251957, Global Avg Loss: 4.04408977, Time: 1.6388
+Steps: 356000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 360000, Sample Num: 360000, Cur Loss: 1.78458238, Log Avg loss: 2.18294391, Global Avg Loss: 4.02341037, Time: 0.7896
+Steps: 360000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 364000, Sample Num: 364000, Cur Loss: 1.97361064, Log Avg loss: 2.17168873, Global Avg Loss: 4.00306178, Time: 0.8178
+Steps: 364000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 368000, Sample Num: 368000, Cur Loss: 2.04987550, Log Avg loss: 2.16092816, Global Avg Loss: 3.98303859, Time: 0.9893
+Steps: 368000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 372000, Sample Num: 372000, Cur Loss: 2.22924042, Log Avg loss: 2.17247738, Global Avg Loss: 3.96357019, Time: 0.9106
+Steps: 372000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 376000, Sample Num: 376000, Cur Loss: 1.98325527, Log Avg loss: 2.12883180, Global Avg Loss: 3.94405170, Time: 1.4951
+Steps: 376000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 380000, Sample Num: 380000, Cur Loss: 2.73339128, Log Avg loss: 2.12240209, Global Avg Loss: 3.92487644, Time: 1.0815
+Steps: 380000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 384000, Sample Num: 384000, Cur Loss: 2.69585013, Log Avg loss: 2.12178525, Global Avg Loss: 3.90609424, Time: 1.0816
+Steps: 384000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 388000, Sample Num: 388000, Cur Loss: 2.26150012, Log Avg loss: 2.09902711, Global Avg Loss: 3.88746468, Time: 2.4201
+Steps: 388000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 392000, Sample Num: 392000, Cur Loss: 2.39946985, Log Avg loss: 2.08442435, Global Avg Loss: 3.86906631, Time: 2.0124
+Steps: 392000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 396000, Sample Num: 396000, Cur Loss: 2.37043858, Log Avg loss: 2.06125278, Global Avg Loss: 3.85080557, Time: 2.1627
+Steps: 396000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 400000, Sample Num: 400000, Cur Loss: 1.89916456, Log Avg loss: 2.05514640, Global Avg Loss: 3.83284898, Time: 1.0426
+Steps: 400000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 404000, Sample Num: 404000, Cur Loss: 1.37707758, Log Avg loss: 2.02609311, Global Avg Loss: 3.81496030, Time: 0.9867
+Steps: 404000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 408000, Sample Num: 408000, Cur Loss: 1.32753932, Log Avg loss: 2.04437567, Global Avg Loss: 3.79760163, Time: 0.5218
+Steps: 408000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 412000, Sample Num: 412000, Cur Loss: 1.36093855, Log Avg loss: 2.03563062, Global Avg Loss: 3.78049512, Time: 0.9352
+Steps: 412000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 416000, Sample Num: 416000, Cur Loss: 1.94327676, Log Avg loss: 2.01377496, Global Avg Loss: 3.76350742, Time: 2.1398
+Steps: 416000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 420000, Sample Num: 420000, Cur Loss: 1.31176949, Log Avg loss: 2.02061932, Global Avg Loss: 3.74690849, Time: 0.6194
+Steps: 420000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 424000, Sample Num: 424000, Cur Loss: 3.17081976, Log Avg loss: 1.99214758, Global Avg Loss: 3.73035414, Time: 2.0574
+Steps: 424000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 428000, Sample Num: 428000, Cur Loss: 2.46304607, Log Avg loss: 2.00361531, Global Avg Loss: 3.71421639, Time: 1.1862
+Steps: 428000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 432000, Sample Num: 432000, Cur Loss: 1.85899997, Log Avg loss: 1.99719030, Global Avg Loss: 3.69831800, Time: 1.7296
+Steps: 432000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 436000, Sample Num: 436000, Cur Loss: 1.34979820, Log Avg loss: 1.94763280, Global Avg Loss: 3.68225667, Time: 1.3147
+Steps: 436000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 440000, Sample Num: 440000, Cur Loss: 2.88736129, Log Avg loss: 1.95451830, Global Avg Loss: 3.66654996, Time: 1.0910
+Steps: 440000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 444000, Sample Num: 444000, Cur Loss: 2.46640396, Log Avg loss: 1.95583968, Global Avg Loss: 3.65113816, Time: 2.2006
+Steps: 444000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 448000, Sample Num: 448000, Cur Loss: 2.46544504, Log Avg loss: 1.93250070, Global Avg Loss: 3.63579318, Time: 2.0507
+Steps: 448000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 452000, Sample Num: 452000, Cur Loss: 1.40661812, Log Avg loss: 1.91351838, Global Avg Loss: 3.62055181, Time: 1.4614
+Steps: 452000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 456000, Sample Num: 456000, Cur Loss: 1.52479565, Log Avg loss: 1.89996717, Global Avg Loss: 3.60545896, Time: 1.3445
+Steps: 456000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 460000, Sample Num: 460000, Cur Loss: 2.73521352, Log Avg loss: 1.89695420, Global Avg Loss: 3.59060240, Time: 1.8125
+Steps: 460000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 464000, Sample Num: 464000, Cur Loss: 1.45856774, Log Avg loss: 1.90630176, Global Avg Loss: 3.57608256, Time: 1.7364
+Steps: 464000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 468000, Sample Num: 468000, Cur Loss: 1.06695569, Log Avg loss: 1.89148894, Global Avg Loss: 3.56168433, Time: 0.6026
+Steps: 468000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 472000, Sample Num: 472000, Cur Loss: 3.00978446, Log Avg loss: 1.87768224, Global Avg Loss: 3.54741312, Time: 1.7101
+Steps: 472000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 476000, Sample Num: 476000, Cur Loss: 1.00665259, Log Avg loss: 1.85332982, Global Avg Loss: 3.53317713, Time: 1.5686
+Steps: 476000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 480000, Sample Num: 480000, Cur Loss: 2.38272405, Log Avg loss: 1.83830796, Global Avg Loss: 3.51905322, Time: 1.0861
+Steps: 480000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 484000, Sample Num: 484000, Cur Loss: 1.39105773, Log Avg loss: 1.86177010, Global Avg Loss: 3.50535667, Time: 1.8274
+Steps: 484000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 488000, Sample Num: 488000, Cur Loss: 1.96854222, Log Avg loss: 1.83480717, Global Avg Loss: 3.49166364, Time: 1.7887
+Steps: 488000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 492000, Sample Num: 492000, Cur Loss: 1.03418493, Log Avg loss: 1.82707355, Global Avg Loss: 3.47813038, Time: 0.6158
+Steps: 492000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 496000, Sample Num: 496000, Cur Loss: 2.03703284, Log Avg loss: 1.81164563, Global Avg Loss: 3.46469099, Time: 1.0925
+Steps: 496000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 500000, Sample Num: 500000, Cur Loss: 1.93101430, Log Avg loss: 1.80701964, Global Avg Loss: 3.45142962, Time: 1.5305
+Steps: 500000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 504000, Sample Num: 504000, Cur Loss: 1.00734282, Log Avg loss: 1.80805716, Global Avg Loss: 3.43838698, Time: 0.5379
+Steps: 504000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 508000, Sample Num: 508000, Cur Loss: 1.46908903, Log Avg loss: 1.79939690, Global Avg Loss: 3.42548155, Time: 0.9128
+Steps: 508000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 512000, Sample Num: 512000, Cur Loss: 1.83376229, Log Avg loss: 1.79741302, Global Avg Loss: 3.41276226, Time: 1.0492
+Steps: 512000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 516000, Sample Num: 516000, Cur Loss: 1.31972957, Log Avg loss: 1.78080645, Global Avg Loss: 3.40011144, Time: 1.4156
+Steps: 516000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 520000, Sample Num: 520000, Cur Loss: 1.19732273, Log Avg loss: 1.76231796, Global Avg Loss: 3.38751303, Time: 0.6459
+Steps: 520000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 524000, Sample Num: 524000, Cur Loss: 1.50366426, Log Avg loss: 1.75769935, Global Avg Loss: 3.37507171, Time: 1.4894
+Steps: 524000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 528000, Sample Num: 528000, Cur Loss: 1.32123971, Log Avg loss: 1.76442530, Global Avg Loss: 3.36286984, Time: 1.0130
+Steps: 528000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 532000, Sample Num: 532000, Cur Loss: 2.19797778, Log Avg loss: 1.74966564, Global Avg Loss: 3.35074048, Time: 1.5530
+Steps: 532000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 536000, Sample Num: 536000, Cur Loss: 2.15199995, Log Avg loss: 1.73357072, Global Avg Loss: 3.33867205, Time: 1.7007
+Steps: 536000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 540000, Sample Num: 540000, Cur Loss: 1.67039633, Log Avg loss: 1.72782483, Global Avg Loss: 3.32673985, Time: 0.9834
+Steps: 540000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 544000, Sample Num: 544000, Cur Loss: 1.27497911, Log Avg loss: 1.72219672, Global Avg Loss: 3.31494174, Time: 0.8459
+Steps: 544000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 548000, Sample Num: 548000, Cur Loss: 2.52782273, Log Avg loss: 1.72582732, Global Avg Loss: 3.30334236, Time: 1.0897
+Steps: 548000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 552000, Sample Num: 552000, Cur Loss: 1.59155297, Log Avg loss: 1.67887027, Global Avg Loss: 3.29157083, Time: 0.8749
+Steps: 552000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 556000, Sample Num: 556000, Cur Loss: 1.05607951, Log Avg loss: 1.68273984, Global Avg Loss: 3.27999650, Time: 0.5608
+Steps: 556000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 560000, Sample Num: 560000, Cur Loss: 1.56792235, Log Avg loss: 1.67205578, Global Avg Loss: 3.26851121, Time: 1.6213
+Steps: 560000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 564000, Sample Num: 564000, Cur Loss: 3.00943875, Log Avg loss: 1.68369320, Global Avg Loss: 3.25727137, Time: 1.8295
+Steps: 564000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 568000, Sample Num: 568000, Cur Loss: 1.69893622, Log Avg loss: 1.66390118, Global Avg Loss: 3.24605045, Time: 2.3937
+Steps: 568000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 572000, Sample Num: 572000, Cur Loss: 1.17801797, Log Avg loss: 1.65875282, Global Avg Loss: 3.23495047, Time: 1.1692
+Steps: 572000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 576000, Sample Num: 576000, Cur Loss: 1.51244748, Log Avg loss: 1.63923023, Global Avg Loss: 3.22386908, Time: 0.7836
+Steps: 576000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 580000, Sample Num: 580000, Cur Loss: 2.59563160, Log Avg loss: 1.63043779, Global Avg Loss: 3.21287990, Time: 1.0830
+Steps: 580000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 584000, Sample Num: 584000, Cur Loss: 1.05675387, Log Avg loss: 1.61606200, Global Avg Loss: 3.20194279, Time: 1.7850
+Steps: 584000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 588000, Sample Num: 588000, Cur Loss: 1.52675450, Log Avg loss: 1.62425993, Global Avg Loss: 3.19121025, Time: 0.9685
+Steps: 588000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 592000, Sample Num: 592000, Cur Loss: 1.11414659, Log Avg loss: 1.60914532, Global Avg Loss: 3.18052062, Time: 0.5664
+Steps: 592000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 596000, Sample Num: 596000, Cur Loss: 1.46876538, Log Avg loss: 1.58645301, Global Avg Loss: 3.16982218, Time: 1.3921
+Steps: 596000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 600000, Sample Num: 600000, Cur Loss: 1.90417302, Log Avg loss: 1.59095330, Global Avg Loss: 3.15929639, Time: 1.8159
+Steps: 600000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 604000, Sample Num: 604000, Cur Loss: 1.53865075, Log Avg loss: 1.59538906, Global Avg Loss: 3.14893939, Time: 0.7912
+Steps: 604000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 608000, Sample Num: 608000, Cur Loss: 1.51837027, Log Avg loss: 1.57787097, Global Avg Loss: 3.13860341, Time: 1.7191
+Steps: 608000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 612000, Sample Num: 612000, Cur Loss: 1.03029358, Log Avg loss: 1.57120524, Global Avg Loss: 3.12835898, Time: 1.6807
+Steps: 612000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 616000, Sample Num: 616000, Cur Loss: 0.72274321, Log Avg loss: 1.56274251, Global Avg Loss: 3.11819264, Time: 0.7897
+Steps: 616000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 620000, Sample Num: 620000, Cur Loss: 1.38114536, Log Avg loss: 1.54162394, Global Avg Loss: 3.10802123, Time: 2.1107
+Steps: 620000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 624000, Sample Num: 624000, Cur Loss: 2.33261752, Log Avg loss: 1.53393737, Global Avg Loss: 3.09793095, Time: 1.5502
+Steps: 624000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 628000, Sample Num: 628000, Cur Loss: 1.20748723, Log Avg loss: 1.50961884, Global Avg Loss: 3.08781431, Time: 1.4865
+Steps: 628000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 632000, Sample Num: 632000, Cur Loss: 1.52861297, Log Avg loss: 1.52031067, Global Avg Loss: 3.07789340, Time: 1.0923
+Steps: 632000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 636000, Sample Num: 636000, Cur Loss: 1.77224028, Log Avg loss: 1.51851566, Global Avg Loss: 3.06808599, Time: 1.0688
+Steps: 636000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 640000, Sample Num: 640000, Cur Loss: 2.08516550, Log Avg loss: 1.51615956, Global Avg Loss: 3.05838645, Time: 2.1139
+Steps: 640000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 644000, Sample Num: 644000, Cur Loss: 1.72562325, Log Avg loss: 1.50433977, Global Avg Loss: 3.04873399, Time: 2.1498
+Steps: 644000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 648000, Sample Num: 648000, Cur Loss: 1.15935540, Log Avg loss: 1.48936947, Global Avg Loss: 3.03910828, Time: 1.5641
+Steps: 648000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 652000, Sample Num: 652000, Cur Loss: 1.46733391, Log Avg loss: 1.46623411, Global Avg Loss: 3.02945875, Time: 1.5839
+Steps: 652000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 656000, Sample Num: 656000, Cur Loss: 1.09993958, Log Avg loss: 1.47161898, Global Avg Loss: 3.01995972, Time: 0.8760
+Steps: 656000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 660000, Sample Num: 660000, Cur Loss: 1.29842591, Log Avg loss: 1.47634736, Global Avg Loss: 3.01060450, Time: 0.8362
+Steps: 660000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 664000, Sample Num: 664000, Cur Loss: 1.53850341, Log Avg loss: 1.45545612, Global Avg Loss: 3.00123613, Time: 1.0813
+Steps: 664000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 668000, Sample Num: 668000, Cur Loss: 0.86008912, Log Avg loss: 1.44507145, Global Avg Loss: 2.99191778, Time: 1.8827
+Steps: 668000, Updated lr: 0.000250
+Training, Epoch: 0001, Batch: 672000, Sample Num: 672000, Cur Loss: 0.96067864, Log Avg loss: 1.42845703, Global Avg Loss: 2.98261147, Time: 0.7151
+Steps: 672000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 676000, Sample Num: 676000, Cur Loss: 1.76200688, Log Avg loss: 1.42305795, Global Avg Loss: 2.97338334, Time: 1.7739
+Steps: 676000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 680000, Sample Num: 680000, Cur Loss: 1.24110985, Log Avg loss: 1.40372181, Global Avg Loss: 2.96415004, Time: 1.6742
+Steps: 680000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 684000, Sample Num: 684000, Cur Loss: 1.06905055, Log Avg loss: 1.40553300, Global Avg Loss: 2.95503532, Time: 1.2628
+Steps: 684000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 688000, Sample Num: 688000, Cur Loss: 1.44664717, Log Avg loss: 1.39366457, Global Avg Loss: 2.94595758, Time: 1.0825
+Steps: 688000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 692000, Sample Num: 692000, Cur Loss: 1.92616713, Log Avg loss: 1.39683165, Global Avg Loss: 2.93700310, Time: 1.0819
+Steps: 692000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 696000, Sample Num: 696000, Cur Loss: 1.02318478, Log Avg loss: 1.37282618, Global Avg Loss: 2.92801357, Time: 0.9060
+Steps: 696000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 700000, Sample Num: 700000, Cur Loss: 1.82557034, Log Avg loss: 1.37077013, Global Avg Loss: 2.91911504, Time: 1.0442
+Steps: 700000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 704000, Sample Num: 704000, Cur Loss: 1.46831238, Log Avg loss: 1.35908794, Global Avg Loss: 2.91025125, Time: 0.9911
+Steps: 704000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 708000, Sample Num: 708000, Cur Loss: 1.50695896, Log Avg loss: 1.35993947, Global Avg Loss: 2.90149243, Time: 0.9266
+Steps: 708000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 712000, Sample Num: 712000, Cur Loss: 3.49658561, Log Avg loss: 1.34190859, Global Avg Loss: 2.89273072, Time: 1.0953
+Steps: 712000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 716000, Sample Num: 716000, Cur Loss: 0.80344421, Log Avg loss: 1.34536759, Global Avg Loss: 2.88408623, Time: 0.5531
+Steps: 716000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 720000, Sample Num: 720000, Cur Loss: 1.31930578, Log Avg loss: 1.32203796, Global Avg Loss: 2.87540819, Time: 0.8193
+Steps: 720000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 724000, Sample Num: 724000, Cur Loss: 1.04254234, Log Avg loss: 1.30979562, Global Avg Loss: 2.86675839, Time: 0.6535
+Steps: 724000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 728000, Sample Num: 728000, Cur Loss: 1.36823416, Log Avg loss: 1.32342773, Global Avg Loss: 2.85827855, Time: 1.1226
+Steps: 728000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 732000, Sample Num: 732000, Cur Loss: 0.51973605, Log Avg loss: 1.31065286, Global Avg Loss: 2.84982158, Time: 0.4982
+Steps: 732000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 736000, Sample Num: 736000, Cur Loss: 0.93066829, Log Avg loss: 1.29463900, Global Avg Loss: 2.84136950, Time: 0.6126
+Steps: 736000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 740000, Sample Num: 740000, Cur Loss: 0.76792032, Log Avg loss: 1.29906374, Global Avg Loss: 2.83303272, Time: 1.6469
+Steps: 740000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 744000, Sample Num: 744000, Cur Loss: 1.83418548, Log Avg loss: 1.31066276, Global Avg Loss: 2.82484793, Time: 2.2480
+Steps: 744000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 748000, Sample Num: 748000, Cur Loss: 1.67180002, Log Avg loss: 1.31348874, Global Avg Loss: 2.81676580, Time: 1.4324
+Steps: 748000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 752000, Sample Num: 752000, Cur Loss: 1.16632175, Log Avg loss: 1.31278198, Global Avg Loss: 2.80876588, Time: 1.7414
+Steps: 752000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 756000, Sample Num: 756000, Cur Loss: 0.97648847, Log Avg loss: 1.29136936, Global Avg Loss: 2.80073733, Time: 1.3665
+Steps: 756000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 760000, Sample Num: 760000, Cur Loss: 1.71672392, Log Avg loss: 1.29592073, Global Avg Loss: 2.79281724, Time: 2.0274
+Steps: 760000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 764000, Sample Num: 764000, Cur Loss: 1.00729883, Log Avg loss: 1.27838704, Global Avg Loss: 2.78488829, Time: 1.6756
+Steps: 764000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 768000, Sample Num: 768000, Cur Loss: 1.33998835, Log Avg loss: 1.28552054, Global Avg Loss: 2.77707908, Time: 1.3138
+Steps: 768000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 772000, Sample Num: 772000, Cur Loss: 1.28889966, Log Avg loss: 1.26823546, Global Avg Loss: 2.76926124, Time: 0.9114
+Steps: 772000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 776000, Sample Num: 776000, Cur Loss: 0.96414530, Log Avg loss: 1.27345240, Global Avg Loss: 2.76155088, Time: 0.6042
+Steps: 776000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 780000, Sample Num: 780000, Cur Loss: 1.28252149, Log Avg loss: 1.27677005, Global Avg Loss: 2.75393662, Time: 1.0122
+Steps: 780000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 784000, Sample Num: 784000, Cur Loss: 2.50622630, Log Avg loss: 1.27569507, Global Avg Loss: 2.74639457, Time: 1.6179
+Steps: 784000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 788000, Sample Num: 788000, Cur Loss: 1.12163663, Log Avg loss: 1.27341708, Global Avg Loss: 2.73891753, Time: 1.2347
+Steps: 788000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 792000, Sample Num: 792000, Cur Loss: 1.28251505, Log Avg loss: 1.25441801, Global Avg Loss: 2.73142006, Time: 0.8815
+Steps: 792000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 796000, Sample Num: 796000, Cur Loss: 0.96290976, Log Avg loss: 1.26079873, Global Avg Loss: 2.72403000, Time: 0.5413
+Steps: 796000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 800000, Sample Num: 800000, Cur Loss: 1.82551193, Log Avg loss: 1.28835626, Global Avg Loss: 2.71685163, Time: 2.0520
+Steps: 800000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 804000, Sample Num: 804000, Cur Loss: 2.08590174, Log Avg loss: 1.27364568, Global Avg Loss: 2.70967150, Time: 1.0949
+Steps: 804000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 808000, Sample Num: 808000, Cur Loss: 1.03775465, Log Avg loss: 1.26364820, Global Avg Loss: 2.70251297, Time: 1.0691
+Steps: 808000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 812000, Sample Num: 812000, Cur Loss: 1.20538843, Log Avg loss: 1.25790930, Global Avg Loss: 2.69539670, Time: 2.1775
+Steps: 812000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 816000, Sample Num: 816000, Cur Loss: 1.02530205, Log Avg loss: 1.25200394, Global Avg Loss: 2.68832124, Time: 1.2848
+Steps: 816000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 820000, Sample Num: 820000, Cur Loss: 1.87154245, Log Avg loss: 1.24681725, Global Avg Loss: 2.68128952, Time: 1.7946
+Steps: 820000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 824000, Sample Num: 824000, Cur Loss: 0.94267577, Log Avg loss: 1.25754625, Global Avg Loss: 2.67437814, Time: 1.7583
+Steps: 824000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 828000, Sample Num: 828000, Cur Loss: 1.52381432, Log Avg loss: 1.25565114, Global Avg Loss: 2.66752439, Time: 1.8160
+Steps: 828000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 832000, Sample Num: 832000, Cur Loss: 0.97407663, Log Avg loss: 1.25212529, Global Avg Loss: 2.66071958, Time: 0.5260
+Steps: 832000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 836000, Sample Num: 836000, Cur Loss: 0.86625433, Log Avg loss: 1.25189741, Global Avg Loss: 2.65397881, Time: 1.9899
+Steps: 836000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 840000, Sample Num: 840000, Cur Loss: 1.12080157, Log Avg loss: 1.26066867, Global Avg Loss: 2.64734400, Time: 1.3525
+Steps: 840000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 844000, Sample Num: 844000, Cur Loss: 0.95960432, Log Avg loss: 1.25211427, Global Avg Loss: 2.64073154, Time: 0.6861
+Steps: 844000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 848000, Sample Num: 848000, Cur Loss: 1.88161397, Log Avg loss: 1.27899671, Global Avg Loss: 2.63430826, Time: 2.0007
+Steps: 848000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 852000, Sample Num: 852000, Cur Loss: 1.68705642, Log Avg loss: 1.27088107, Global Avg Loss: 2.62790719, Time: 0.9783
+Steps: 852000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 856000, Sample Num: 856000, Cur Loss: 2.19002390, Log Avg loss: 1.25065427, Global Avg Loss: 2.62147143, Time: 1.6245
+Steps: 856000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 860000, Sample Num: 860000, Cur Loss: 0.62468815, Log Avg loss: 1.25530364, Global Avg Loss: 2.61511716, Time: 0.5345
+Steps: 860000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 864000, Sample Num: 864000, Cur Loss: 1.41649723, Log Avg loss: 1.24459556, Global Avg Loss: 2.60877215, Time: 1.8123
+Steps: 864000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 868000, Sample Num: 868000, Cur Loss: 1.00220156, Log Avg loss: 1.24450211, Global Avg Loss: 2.60248520, Time: 1.9911
+Steps: 868000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 872000, Sample Num: 872000, Cur Loss: 0.94597411, Log Avg loss: 1.25646054, Global Avg Loss: 2.59631077, Time: 1.7949
+Steps: 872000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 876000, Sample Num: 876000, Cur Loss: 1.78834367, Log Avg loss: 1.24601666, Global Avg Loss: 2.59014504, Time: 2.2057
+Steps: 876000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 880000, Sample Num: 880000, Cur Loss: 1.70348001, Log Avg loss: 1.26408773, Global Avg Loss: 2.58411751, Time: 1.4285
+Steps: 880000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 884000, Sample Num: 884000, Cur Loss: 1.46909475, Log Avg loss: 1.24164568, Global Avg Loss: 2.57804298, Time: 2.2413
+Steps: 884000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 888000, Sample Num: 888000, Cur Loss: 1.70902014, Log Avg loss: 1.23067550, Global Avg Loss: 2.57197375, Time: 0.9476
+Steps: 888000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 892000, Sample Num: 892000, Cur Loss: 0.64281452, Log Avg loss: 1.23398659, Global Avg Loss: 2.56597381, Time: 1.1291
+Steps: 892000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 896000, Sample Num: 896000, Cur Loss: 1.22068667, Log Avg loss: 1.22200734, Global Avg Loss: 2.55997396, Time: 1.0849
+Steps: 896000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 900000, Sample Num: 900000, Cur Loss: 1.03979766, Log Avg loss: 1.20085755, Global Avg Loss: 2.55393344, Time: 1.6871
+Steps: 900000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 904000, Sample Num: 904000, Cur Loss: 0.96412039, Log Avg loss: 1.21126519, Global Avg Loss: 2.54799243, Time: 0.7725
+Steps: 904000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 908000, Sample Num: 908000, Cur Loss: 1.72666681, Log Avg loss: 1.17644693, Global Avg Loss: 2.54195038, Time: 1.0848
+Steps: 908000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 912000, Sample Num: 912000, Cur Loss: 1.91530478, Log Avg loss: 1.17434069, Global Avg Loss: 2.53595210, Time: 2.3279
+Steps: 912000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 916000, Sample Num: 916000, Cur Loss: 1.03665185, Log Avg loss: 1.18205897, Global Avg Loss: 2.53003990, Time: 0.8235
+Steps: 916000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 920000, Sample Num: 920000, Cur Loss: 1.08332396, Log Avg loss: 1.17170488, Global Avg Loss: 2.52413409, Time: 1.4911
+Steps: 920000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 924000, Sample Num: 924000, Cur Loss: 0.68903309, Log Avg loss: 1.18036047, Global Avg Loss: 2.51831689, Time: 1.3611
+Steps: 924000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 928000, Sample Num: 928000, Cur Loss: 0.89311987, Log Avg loss: 1.16578172, Global Avg Loss: 2.51248700, Time: 2.1457
+Steps: 928000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 932000, Sample Num: 932000, Cur Loss: 1.57227457, Log Avg loss: 1.14924084, Global Avg Loss: 2.50663616, Time: 1.3831
+Steps: 932000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 936000, Sample Num: 936000, Cur Loss: 0.74946433, Log Avg loss: 1.12451798, Global Avg Loss: 2.50072967, Time: 0.6069
+Steps: 936000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 940000, Sample Num: 940000, Cur Loss: 0.98401082, Log Avg loss: 1.12643836, Global Avg Loss: 2.49488162, Time: 0.8325
+Steps: 940000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 944000, Sample Num: 944000, Cur Loss: 0.76590914, Log Avg loss: 1.13476005, Global Avg Loss: 2.48911839, Time: 1.3132
+Steps: 944000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 948000, Sample Num: 948000, Cur Loss: 1.10179770, Log Avg loss: 1.12356089, Global Avg Loss: 2.48335655, Time: 0.8103
+Steps: 948000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 952000, Sample Num: 952000, Cur Loss: 0.83271343, Log Avg loss: 1.11075075, Global Avg Loss: 2.47758930, Time: 1.3046
+Steps: 952000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 956000, Sample Num: 956000, Cur Loss: 1.24444413, Log Avg loss: 1.10051302, Global Avg Loss: 2.47182747, Time: 1.6093
+Steps: 956000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 960000, Sample Num: 960000, Cur Loss: 0.76410687, Log Avg loss: 1.11557499, Global Avg Loss: 2.46617642, Time: 1.5563
+Steps: 960000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 964000, Sample Num: 964000, Cur Loss: 0.46114045, Log Avg loss: 1.10825127, Global Avg Loss: 2.46054188, Time: 0.8669
+Steps: 964000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 968000, Sample Num: 968000, Cur Loss: 0.82006872, Log Avg loss: 1.10051368, Global Avg Loss: 2.45492192, Time: 1.6756
+Steps: 968000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 972000, Sample Num: 972000, Cur Loss: 1.06010580, Log Avg loss: 1.10866897, Global Avg Loss: 2.44938179, Time: 1.5552
+Steps: 972000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 976000, Sample Num: 976000, Cur Loss: 1.05137777, Log Avg loss: 1.10300554, Global Avg Loss: 2.44386385, Time: 1.5927
+Steps: 976000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 980000, Sample Num: 980000, Cur Loss: 1.26767039, Log Avg loss: 1.11059617, Global Avg Loss: 2.43842194, Time: 1.0827
+Steps: 980000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 984000, Sample Num: 984000, Cur Loss: 2.13509464, Log Avg loss: 1.09635561, Global Avg Loss: 2.43296639, Time: 1.6465
+Steps: 984000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 988000, Sample Num: 988000, Cur Loss: 0.71700436, Log Avg loss: 1.08818687, Global Avg Loss: 2.42752194, Time: 0.6066
+Steps: 988000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 992000, Sample Num: 992000, Cur Loss: 0.85328305, Log Avg loss: 1.09055579, Global Avg Loss: 2.42213095, Time: 1.1537
+Steps: 992000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 996000, Sample Num: 996000, Cur Loss: 0.80556482, Log Avg loss: 1.07908716, Global Avg Loss: 2.41673720, Time: 0.7061
+Steps: 996000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1000000, Sample Num: 1000000, Cur Loss: 1.04158294, Log Avg loss: 1.08731025, Global Avg Loss: 2.41141949, Time: 1.9412
+Steps: 1000000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1004000, Sample Num: 1004000, Cur Loss: 0.96201503, Log Avg loss: 1.09398416, Global Avg Loss: 2.40617074, Time: 1.2372
+Steps: 1004000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1008000, Sample Num: 1008000, Cur Loss: 1.06647384, Log Avg loss: 1.07510116, Global Avg Loss: 2.40088872, Time: 1.3939
+Steps: 1008000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1012000, Sample Num: 1012000, Cur Loss: 0.52437407, Log Avg loss: 1.07889548, Global Avg Loss: 2.39566345, Time: 0.9436
+Steps: 1012000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1016000, Sample Num: 1016000, Cur Loss: 0.84120786, Log Avg loss: 1.08307322, Global Avg Loss: 2.39049577, Time: 1.3232
+Steps: 1016000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1020000, Sample Num: 1020000, Cur Loss: 0.83806551, Log Avg loss: 1.07766746, Global Avg Loss: 2.38534743, Time: 1.6653
+Steps: 1020000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1024000, Sample Num: 1024000, Cur Loss: 0.55862659, Log Avg loss: 1.06431793, Global Avg Loss: 2.38018715, Time: 0.6623
+Steps: 1024000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1028000, Sample Num: 1028000, Cur Loss: 0.87070298, Log Avg loss: 1.08034749, Global Avg Loss: 2.37512941, Time: 0.9193
+Steps: 1028000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1032000, Sample Num: 1032000, Cur Loss: 1.07028389, Log Avg loss: 1.06691528, Global Avg Loss: 2.37005881, Time: 0.9170
+Steps: 1032000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1036000, Sample Num: 1036000, Cur Loss: 0.92579782, Log Avg loss: 1.05415607, Global Avg Loss: 2.36497811, Time: 1.9036
+Steps: 1036000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1040000, Sample Num: 1040000, Cur Loss: 0.59780097, Log Avg loss: 1.05910793, Global Avg Loss: 2.35995553, Time: 0.5922
+Steps: 1040000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1044000, Sample Num: 1044000, Cur Loss: 0.86117315, Log Avg loss: 1.07294671, Global Avg Loss: 2.35502446, Time: 1.2995
+Steps: 1044000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1048000, Sample Num: 1048000, Cur Loss: 1.51618874, Log Avg loss: 1.07443295, Global Avg Loss: 2.35013671, Time: 1.8203
+Steps: 1048000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1052000, Sample Num: 1052000, Cur Loss: 1.03207576, Log Avg loss: 1.06002988, Global Avg Loss: 2.34523136, Time: 0.8731
+Steps: 1052000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1056000, Sample Num: 1056000, Cur Loss: 1.78300250, Log Avg loss: 1.05545261, Global Avg Loss: 2.34034583, Time: 1.0847
+Steps: 1056000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1060000, Sample Num: 1060000, Cur Loss: 1.23694253, Log Avg loss: 1.05400539, Global Avg Loss: 2.33549172, Time: 0.9844
+Steps: 1060000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1064000, Sample Num: 1064000, Cur Loss: 1.10551798, Log Avg loss: 1.06213465, Global Avg Loss: 2.33070466, Time: 1.5647
+Steps: 1064000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1068000, Sample Num: 1068000, Cur Loss: 0.87476504, Log Avg loss: 1.04398122, Global Avg Loss: 2.32588547, Time: 1.3507
+Steps: 1068000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1072000, Sample Num: 1072000, Cur Loss: 1.08423960, Log Avg loss: 1.04979840, Global Avg Loss: 2.32112396, Time: 1.0954
+Steps: 1072000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1076000, Sample Num: 1076000, Cur Loss: 2.54022336, Log Avg loss: 1.05708077, Global Avg Loss: 2.31642491, Time: 1.1981
+Steps: 1076000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1080000, Sample Num: 1080000, Cur Loss: 0.86316597, Log Avg loss: 1.06372964, Global Avg Loss: 2.31178530, Time: 0.6438
+Steps: 1080000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1084000, Sample Num: 1084000, Cur Loss: 0.89860827, Log Avg loss: 1.03469585, Global Avg Loss: 2.30707279, Time: 0.8264
+Steps: 1084000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1088000, Sample Num: 1088000, Cur Loss: 1.88634074, Log Avg loss: 1.04671362, Global Avg Loss: 2.30243912, Time: 1.4237
+Steps: 1088000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1092000, Sample Num: 1092000, Cur Loss: 1.05219793, Log Avg loss: 1.04273318, Global Avg Loss: 2.29782481, Time: 0.6804
+Steps: 1092000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1096000, Sample Num: 1096000, Cur Loss: 0.51926738, Log Avg loss: 1.03756870, Global Avg Loss: 2.29322533, Time: 0.5643
+Steps: 1096000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1100000, Sample Num: 1100000, Cur Loss: 1.20304048, Log Avg loss: 1.02975379, Global Avg Loss: 2.28863089, Time: 1.3900
+Steps: 1100000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1104000, Sample Num: 1104000, Cur Loss: 0.98356944, Log Avg loss: 1.05343174, Global Avg Loss: 2.28415553, Time: 1.3796
+Steps: 1104000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1108000, Sample Num: 1108000, Cur Loss: 0.64471167, Log Avg loss: 1.03191974, Global Avg Loss: 2.27963483, Time: 1.6175
+Steps: 1108000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1112000, Sample Num: 1112000, Cur Loss: 1.25594532, Log Avg loss: 1.04796593, Global Avg Loss: 2.27520436, Time: 2.1024
+Steps: 1112000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1116000, Sample Num: 1116000, Cur Loss: 0.45402262, Log Avg loss: 1.03173821, Global Avg Loss: 2.27074750, Time: 1.6741
+Steps: 1116000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1120000, Sample Num: 1120000, Cur Loss: 1.25606847, Log Avg loss: 1.03353845, Global Avg Loss: 2.26632889, Time: 1.8101
+Steps: 1120000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1124000, Sample Num: 1124000, Cur Loss: 0.86726719, Log Avg loss: 1.03175747, Global Avg Loss: 2.26193540, Time: 0.8205
+Steps: 1124000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1128000, Sample Num: 1128000, Cur Loss: 0.95638579, Log Avg loss: 1.04009691, Global Avg Loss: 2.25760264, Time: 0.6832
+Steps: 1128000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1132000, Sample Num: 1132000, Cur Loss: 0.52199185, Log Avg loss: 1.03464290, Global Avg Loss: 2.25328123, Time: 1.5977
+Steps: 1132000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1136000, Sample Num: 1136000, Cur Loss: 0.63472331, Log Avg loss: 1.02761711, Global Avg Loss: 2.24896551, Time: 0.6028
+Steps: 1136000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1140000, Sample Num: 1140000, Cur Loss: 0.67000812, Log Avg loss: 1.02931393, Global Avg Loss: 2.24468603, Time: 1.5613
+Steps: 1140000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1144000, Sample Num: 1144000, Cur Loss: 0.84431577, Log Avg loss: 1.04076008, Global Avg Loss: 2.24047650, Time: 1.5406
+Steps: 1144000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1148000, Sample Num: 1148000, Cur Loss: 1.59233963, Log Avg loss: 1.01811547, Global Avg Loss: 2.23621740, Time: 1.0876
+Steps: 1148000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1152000, Sample Num: 1152000, Cur Loss: 0.92471480, Log Avg loss: 1.02635046, Global Avg Loss: 2.23201647, Time: 1.6163
+Steps: 1152000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1156000, Sample Num: 1156000, Cur Loss: 1.19963944, Log Avg loss: 1.02517324, Global Avg Loss: 2.22784054, Time: 37.6541
+Steps: 1156000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1160000, Sample Num: 1160000, Cur Loss: 0.71666682, Log Avg loss: 1.02526498, Global Avg Loss: 2.22369373, Time: 0.8867
+Steps: 1160000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1164000, Sample Num: 1164000, Cur Loss: 0.70731992, Log Avg loss: 1.01592627, Global Avg Loss: 2.21954333, Time: 1.7225
+Steps: 1164000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1168000, Sample Num: 1168000, Cur Loss: 0.46167395, Log Avg loss: 1.04046214, Global Avg Loss: 2.21550538, Time: 0.6378
+Steps: 1168000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1172000, Sample Num: 1172000, Cur Loss: 1.23268759, Log Avg loss: 1.02207291, Global Avg Loss: 2.21143223, Time: 1.6857
+Steps: 1172000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1176000, Sample Num: 1176000, Cur Loss: 0.51789939, Log Avg loss: 1.02732666, Global Avg Loss: 2.20740466, Time: 0.9706
+Steps: 1176000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1180000, Sample Num: 1180000, Cur Loss: 0.97216266, Log Avg loss: 1.00185888, Global Avg Loss: 2.20331806, Time: 0.8197
+Steps: 1180000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1184000, Sample Num: 1184000, Cur Loss: 1.20274961, Log Avg loss: 1.00291792, Global Avg Loss: 2.19926266, Time: 1.3808
+Steps: 1184000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1188000, Sample Num: 1188000, Cur Loss: 0.41763052, Log Avg loss: 1.01523122, Global Avg Loss: 2.19527602, Time: 0.5248
+Steps: 1188000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1192000, Sample Num: 1192000, Cur Loss: 0.95091897, Log Avg loss: 1.01370353, Global Avg Loss: 2.19131101, Time: 1.5395
+Steps: 1192000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1196000, Sample Num: 1196000, Cur Loss: 0.98253828, Log Avg loss: 1.01840748, Global Avg Loss: 2.18738826, Time: 1.3612
+Steps: 1196000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1200000, Sample Num: 1200000, Cur Loss: 0.53616637, Log Avg loss: 1.00350091, Global Avg Loss: 2.18344197, Time: 0.6020
+Steps: 1200000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1204000, Sample Num: 1204000, Cur Loss: 0.65590656, Log Avg loss: 1.01204239, Global Avg Loss: 2.17955027, Time: 0.9529
+Steps: 1204000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1208000, Sample Num: 1208000, Cur Loss: 1.65741169, Log Avg loss: 1.00742485, Global Avg Loss: 2.17566906, Time: 1.0814
+Steps: 1208000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1212000, Sample Num: 1212000, Cur Loss: 1.43475831, Log Avg loss: 1.00738929, Global Avg Loss: 2.17181336, Time: 1.0886
+Steps: 1212000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1216000, Sample Num: 1216000, Cur Loss: 0.74934661, Log Avg loss: 0.99671799, Global Avg Loss: 2.16794791, Time: 0.9207
+Steps: 1216000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1220000, Sample Num: 1220000, Cur Loss: 0.94739753, Log Avg loss: 1.00001223, Global Avg Loss: 2.16411861, Time: 2.1778
+Steps: 1220000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1224000, Sample Num: 1224000, Cur Loss: 1.72228646, Log Avg loss: 1.01265337, Global Avg Loss: 2.16035565, Time: 1.8845
+Steps: 1224000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1228000, Sample Num: 1228000, Cur Loss: 0.89062214, Log Avg loss: 0.99965788, Global Avg Loss: 2.15657488, Time: 1.5850
+Steps: 1228000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1232000, Sample Num: 1232000, Cur Loss: 0.58107471, Log Avg loss: 0.98519911, Global Avg Loss: 2.15277171, Time: 0.9688
+Steps: 1232000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1236000, Sample Num: 1236000, Cur Loss: 0.71568060, Log Avg loss: 0.99494692, Global Avg Loss: 2.14902471, Time: 1.6389
+Steps: 1236000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1240000, Sample Num: 1240000, Cur Loss: 1.20174944, Log Avg loss: 0.99843034, Global Avg Loss: 2.14531311, Time: 1.0813
+Steps: 1240000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1244000, Sample Num: 1244000, Cur Loss: 1.13273442, Log Avg loss: 0.99930925, Global Avg Loss: 2.14162821, Time: 1.9987
+Steps: 1244000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1248000, Sample Num: 1248000, Cur Loss: 0.85283965, Log Avg loss: 0.99659595, Global Avg Loss: 2.13795824, Time: 2.1356
+Steps: 1248000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1252000, Sample Num: 1252000, Cur Loss: 0.97793621, Log Avg loss: 1.00418662, Global Avg Loss: 2.13433596, Time: 1.6656
+Steps: 1252000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1256000, Sample Num: 1256000, Cur Loss: 2.03352308, Log Avg loss: 0.99561613, Global Avg Loss: 2.13070947, Time: 1.0853
+Steps: 1256000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1260000, Sample Num: 1260000, Cur Loss: 1.03936124, Log Avg loss: 0.98076983, Global Avg Loss: 2.12705886, Time: 1.4980
+Steps: 1260000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1264000, Sample Num: 1264000, Cur Loss: 1.65881503, Log Avg loss: 0.98818994, Global Avg Loss: 2.12345485, Time: 1.0909
+Steps: 1264000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1268000, Sample Num: 1268000, Cur Loss: 1.60230386, Log Avg loss: 0.98360083, Global Avg Loss: 2.11985909, Time: 2.1070
+Steps: 1268000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1272000, Sample Num: 1272000, Cur Loss: 1.59125674, Log Avg loss: 0.99260367, Global Avg Loss: 2.11631427, Time: 2.4928
+Steps: 1272000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1276000, Sample Num: 1276000, Cur Loss: 0.59352040, Log Avg loss: 0.99292697, Global Avg Loss: 2.11279268, Time: 0.6130
+Steps: 1276000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1280000, Sample Num: 1280000, Cur Loss: 0.49634764, Log Avg loss: 0.99086781, Global Avg Loss: 2.10928666, Time: 1.4407
+Steps: 1280000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1284000, Sample Num: 1284000, Cur Loss: 1.32026684, Log Avg loss: 0.99449400, Global Avg Loss: 2.10581379, Time: 0.9549
+Steps: 1284000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1288000, Sample Num: 1288000, Cur Loss: 0.52152622, Log Avg loss: 0.98928123, Global Avg Loss: 2.10234629, Time: 0.5241
+Steps: 1288000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1292000, Sample Num: 1292000, Cur Loss: 0.91696835, Log Avg loss: 0.99955980, Global Avg Loss: 2.09893209, Time: 1.4781
+Steps: 1292000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1296000, Sample Num: 1296000, Cur Loss: 0.89288878, Log Avg loss: 0.98398522, Global Avg Loss: 2.09549090, Time: 1.4109
+Steps: 1296000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1300000, Sample Num: 1300000, Cur Loss: 0.65982997, Log Avg loss: 0.97666219, Global Avg Loss: 2.09204835, Time: 0.5765
+Steps: 1300000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1304000, Sample Num: 1304000, Cur Loss: 1.32933915, Log Avg loss: 0.98610587, Global Avg Loss: 2.08865589, Time: 1.0775
+Steps: 1304000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1308000, Sample Num: 1308000, Cur Loss: 0.85147393, Log Avg loss: 0.98705225, Global Avg Loss: 2.08528707, Time: 1.5544
+Steps: 1308000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1312000, Sample Num: 1312000, Cur Loss: 1.02429783, Log Avg loss: 0.98704815, Global Avg Loss: 2.08193878, Time: 0.7789
+Steps: 1312000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1316000, Sample Num: 1316000, Cur Loss: 1.53956211, Log Avg loss: 0.97777134, Global Avg Loss: 2.07858265, Time: 1.1000
+Steps: 1316000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1320000, Sample Num: 1320000, Cur Loss: 1.29953837, Log Avg loss: 0.97947021, Global Avg Loss: 2.07525201, Time: 2.0518
+Steps: 1320000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1324000, Sample Num: 1324000, Cur Loss: 0.88673502, Log Avg loss: 0.97272142, Global Avg Loss: 2.07192110, Time: 1.8342
+Steps: 1324000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1328000, Sample Num: 1328000, Cur Loss: 1.69100249, Log Avg loss: 0.96810878, Global Avg Loss: 2.06859636, Time: 1.0847
+Steps: 1328000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1332000, Sample Num: 1332000, Cur Loss: 1.26132548, Log Avg loss: 0.97864696, Global Avg Loss: 2.06532324, Time: 1.0821
+Steps: 1332000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1336000, Sample Num: 1336000, Cur Loss: 1.29317033, Log Avg loss: 0.97735942, Global Avg Loss: 2.06206586, Time: 1.2876
+Steps: 1336000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1340000, Sample Num: 1340000, Cur Loss: 0.77233243, Log Avg loss: 0.97606444, Global Avg Loss: 2.05882407, Time: 1.9025
+Steps: 1340000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1344000, Sample Num: 1344000, Cur Loss: 0.75319576, Log Avg loss: 0.98610185, Global Avg Loss: 2.05563144, Time: 0.7926
+Steps: 1344000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1348000, Sample Num: 1348000, Cur Loss: 0.82468164, Log Avg loss: 0.97531590, Global Avg Loss: 2.05242576, Time: 0.8035
+Steps: 1348000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1352000, Sample Num: 1352000, Cur Loss: 0.25009859, Log Avg loss: 0.96890619, Global Avg Loss: 2.04922008, Time: 0.6480
+Steps: 1352000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1356000, Sample Num: 1356000, Cur Loss: 1.52771425, Log Avg loss: 0.97687448, Global Avg Loss: 2.04605682, Time: 1.3065
+Steps: 1356000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1360000, Sample Num: 1360000, Cur Loss: 0.75310594, Log Avg loss: 0.96591708, Global Avg Loss: 2.04287994, Time: 1.4787
+Steps: 1360000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1364000, Sample Num: 1364000, Cur Loss: 0.52136707, Log Avg loss: 0.96587550, Global Avg Loss: 2.03972157, Time: 0.5971
+Steps: 1364000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1368000, Sample Num: 1368000, Cur Loss: 1.02224946, Log Avg loss: 0.97299401, Global Avg Loss: 2.03660248, Time: 1.0783
+Steps: 1368000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1372000, Sample Num: 1372000, Cur Loss: 1.45936441, Log Avg loss: 0.97027042, Global Avg Loss: 2.03349364, Time: 2.2584
+Steps: 1372000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1376000, Sample Num: 1376000, Cur Loss: 0.82216537, Log Avg loss: 0.98293294, Global Avg Loss: 2.03043968, Time: 0.8801
+Steps: 1376000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1380000, Sample Num: 1380000, Cur Loss: 0.49282712, Log Avg loss: 0.96605084, Global Avg Loss: 2.02735450, Time: 0.5921
+Steps: 1380000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1384000, Sample Num: 1384000, Cur Loss: 0.60978633, Log Avg loss: 0.96542492, Global Avg Loss: 2.02428534, Time: 1.9803
+Steps: 1384000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1388000, Sample Num: 1388000, Cur Loss: 1.02664018, Log Avg loss: 0.95645779, Global Avg Loss: 2.02120803, Time: 2.4612
+Steps: 1388000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1392000, Sample Num: 1392000, Cur Loss: 0.77357626, Log Avg loss: 0.96983513, Global Avg Loss: 2.01818684, Time: 1.6567
+Steps: 1392000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1396000, Sample Num: 1396000, Cur Loss: 1.13825536, Log Avg loss: 0.97368878, Global Avg Loss: 2.01519401, Time: 2.0471
+Steps: 1396000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1400000, Sample Num: 1400000, Cur Loss: 0.83530229, Log Avg loss: 0.96850719, Global Avg Loss: 2.01220347, Time: 1.8211
+Steps: 1400000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1404000, Sample Num: 1404000, Cur Loss: 0.91527694, Log Avg loss: 0.96433643, Global Avg Loss: 2.00921810, Time: 0.7025
+Steps: 1404000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1408000, Sample Num: 1408000, Cur Loss: 1.04119813, Log Avg loss: 0.96284074, Global Avg Loss: 2.00624543, Time: 1.7252
+Steps: 1408000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1412000, Sample Num: 1412000, Cur Loss: 3.25708866, Log Avg loss: 0.96912425, Global Avg Loss: 2.00330741, Time: 1.0866
+Steps: 1412000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1416000, Sample Num: 1416000, Cur Loss: 1.14119673, Log Avg loss: 0.96270176, Global Avg Loss: 2.00036785, Time: 2.3325
+Steps: 1416000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1420000, Sample Num: 1420000, Cur Loss: 1.83528733, Log Avg loss: 0.96680494, Global Avg Loss: 1.99745641, Time: 1.4000
+Steps: 1420000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1424000, Sample Num: 1424000, Cur Loss: 0.53675413, Log Avg loss: 0.96065608, Global Avg Loss: 1.99454405, Time: 0.5400
+Steps: 1424000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1428000, Sample Num: 1428000, Cur Loss: 0.61742723, Log Avg loss: 0.97907779, Global Avg Loss: 1.99169960, Time: 0.5289
+Steps: 1428000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1432000, Sample Num: 1432000, Cur Loss: 0.90770894, Log Avg loss: 0.97208931, Global Avg Loss: 1.98885153, Time: 0.7656
+Steps: 1432000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1436000, Sample Num: 1436000, Cur Loss: 0.79050875, Log Avg loss: 0.95096801, Global Avg Loss: 1.98596049, Time: 0.6816
+Steps: 1436000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1440000, Sample Num: 1440000, Cur Loss: 1.14713049, Log Avg loss: 0.96629112, Global Avg Loss: 1.98312807, Time: 1.6655
+Steps: 1440000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1444000, Sample Num: 1444000, Cur Loss: 0.51027107, Log Avg loss: 0.96747021, Global Avg Loss: 1.98031462, Time: 0.5299
+Steps: 1444000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1448000, Sample Num: 1448000, Cur Loss: 0.99818587, Log Avg loss: 0.96356186, Global Avg Loss: 1.97750591, Time: 0.8700
+Steps: 1448000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1452000, Sample Num: 1452000, Cur Loss: 0.45424679, Log Avg loss: 0.95659251, Global Avg Loss: 1.97469347, Time: 2.0044
+Steps: 1452000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1456000, Sample Num: 1456000, Cur Loss: 0.93049288, Log Avg loss: 0.95804373, Global Avg Loss: 1.97190048, Time: 1.0827
+Steps: 1456000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1460000, Sample Num: 1460000, Cur Loss: 1.07668436, Log Avg loss: 0.95537898, Global Avg Loss: 1.96911549, Time: 1.0816
+Steps: 1460000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1464000, Sample Num: 1464000, Cur Loss: 0.54025072, Log Avg loss: 0.95512628, Global Avg Loss: 1.96634503, Time: 0.6407
+Steps: 1464000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1468000, Sample Num: 1468000, Cur Loss: 0.52315682, Log Avg loss: 0.95434267, Global Avg Loss: 1.96358753, Time: 1.5780
+Steps: 1468000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1472000, Sample Num: 1472000, Cur Loss: 0.42414579, Log Avg loss: 0.94630357, Global Avg Loss: 1.96082317, Time: 1.7682
+Steps: 1472000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1476000, Sample Num: 1476000, Cur Loss: 0.82444870, Log Avg loss: 0.95774923, Global Avg Loss: 1.95810481, Time: 2.1729
+Steps: 1476000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1480000, Sample Num: 1480000, Cur Loss: 0.92752677, Log Avg loss: 0.95875078, Global Avg Loss: 1.95540385, Time: 1.7611
+Steps: 1480000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1484000, Sample Num: 1484000, Cur Loss: 0.83520585, Log Avg loss: 0.94991744, Global Avg Loss: 1.95269365, Time: 2.1243
+Steps: 1484000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1488000, Sample Num: 1488000, Cur Loss: 1.02411115, Log Avg loss: 0.95640045, Global Avg Loss: 1.95001544, Time: 1.0817
+Steps: 1488000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1492000, Sample Num: 1492000, Cur Loss: 0.94431537, Log Avg loss: 0.94827989, Global Avg Loss: 1.94732982, Time: 1.0850
+Steps: 1492000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1496000, Sample Num: 1496000, Cur Loss: 0.29729426, Log Avg loss: 0.94812477, Global Avg Loss: 1.94465815, Time: 0.6983
+Steps: 1496000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1500000, Sample Num: 1500000, Cur Loss: 1.59889281, Log Avg loss: 0.95221496, Global Avg Loss: 1.94201164, Time: 1.8482
+Steps: 1500000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1504000, Sample Num: 1504000, Cur Loss: 0.66855478, Log Avg loss: 0.95580023, Global Avg Loss: 1.93938873, Time: 0.8240
+Steps: 1504000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1508000, Sample Num: 1508000, Cur Loss: 0.81958455, Log Avg loss: 0.94630462, Global Avg Loss: 1.93675456, Time: 0.5632
+Steps: 1508000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1512000, Sample Num: 1512000, Cur Loss: 0.69922221, Log Avg loss: 0.95046524, Global Avg Loss: 1.93414533, Time: 0.9853
+Steps: 1512000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1516000, Sample Num: 1516000, Cur Loss: 0.57422072, Log Avg loss: 0.94565153, Global Avg Loss: 1.93153716, Time: 1.8417
+Steps: 1516000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1520000, Sample Num: 1520000, Cur Loss: 2.72658467, Log Avg loss: 0.94061208, Global Avg Loss: 1.92892947, Time: 2.4179
+Steps: 1520000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1524000, Sample Num: 1524000, Cur Loss: 1.47570801, Log Avg loss: 0.95346694, Global Avg Loss: 1.92636920, Time: 1.0864
+Steps: 1524000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1528000, Sample Num: 1528000, Cur Loss: 1.35550678, Log Avg loss: 0.95903130, Global Avg Loss: 1.92383690, Time: 2.3499
+Steps: 1528000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1532000, Sample Num: 1532000, Cur Loss: 1.21692514, Log Avg loss: 0.95274372, Global Avg Loss: 1.92130141, Time: 1.0851
+Steps: 1532000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1536000, Sample Num: 1536000, Cur Loss: 0.68479186, Log Avg loss: 0.95106500, Global Avg Loss: 1.91877475, Time: 1.5113
+Steps: 1536000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1540000, Sample Num: 1540000, Cur Loss: 1.08202636, Log Avg loss: 0.94598827, Global Avg Loss: 1.91624803, Time: 2.0388
+Steps: 1540000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1544000, Sample Num: 1544000, Cur Loss: 0.73227870, Log Avg loss: 0.94623428, Global Avg Loss: 1.91373504, Time: 1.5863
+Steps: 1544000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1548000, Sample Num: 1548000, Cur Loss: 1.25110042, Log Avg loss: 0.94286856, Global Avg Loss: 1.91122634, Time: 2.3295
+Steps: 1548000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1552000, Sample Num: 1552000, Cur Loss: 1.44621718, Log Avg loss: 0.94285857, Global Avg Loss: 1.90873055, Time: 2.4268
+Steps: 1552000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1556000, Sample Num: 1556000, Cur Loss: 0.66834760, Log Avg loss: 0.94688996, Global Avg Loss: 1.90625795, Time: 0.5624
+Steps: 1556000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1560000, Sample Num: 1560000, Cur Loss: 1.21337569, Log Avg loss: 0.94744149, Global Avg Loss: 1.90379945, Time: 1.0842
+Steps: 1560000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1564000, Sample Num: 1564000, Cur Loss: 0.67269266, Log Avg loss: 0.92485776, Global Avg Loss: 1.90129576, Time: 1.6890
+Steps: 1564000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1568000, Sample Num: 1568000, Cur Loss: 0.83853924, Log Avg loss: 0.95084912, Global Avg Loss: 1.89887115, Time: 0.5227
+Steps: 1568000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1572000, Sample Num: 1572000, Cur Loss: 0.92293835, Log Avg loss: 0.94810636, Global Avg Loss: 1.89645190, Time: 1.7227
+Steps: 1572000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1576000, Sample Num: 1576000, Cur Loss: 0.83161211, Log Avg loss: 0.95296578, Global Avg Loss: 1.89405727, Time: 0.8713
+Steps: 1576000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1580000, Sample Num: 1580000, Cur Loss: 1.06443048, Log Avg loss: 0.93653671, Global Avg Loss: 1.89163317, Time: 1.1412
+Steps: 1580000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1584000, Sample Num: 1584000, Cur Loss: 0.56050420, Log Avg loss: 0.94911237, Global Avg Loss: 1.88925306, Time: 1.1363
+Steps: 1584000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1588000, Sample Num: 1588000, Cur Loss: 0.75586724, Log Avg loss: 0.93923124, Global Avg Loss: 1.88686006, Time: 0.9142
+Steps: 1588000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1592000, Sample Num: 1592000, Cur Loss: 0.79430062, Log Avg loss: 0.94366407, Global Avg Loss: 1.88449022, Time: 0.8196
+Steps: 1592000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1596000, Sample Num: 1596000, Cur Loss: 1.11861646, Log Avg loss: 0.94800120, Global Avg Loss: 1.88214313, Time: 1.4780
+Steps: 1596000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1600000, Sample Num: 1600000, Cur Loss: 0.62492412, Log Avg loss: 0.93706219, Global Avg Loss: 1.87978043, Time: 1.8005
+Steps: 1600000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1604000, Sample Num: 1604000, Cur Loss: 1.09393680, Log Avg loss: 0.93475551, Global Avg Loss: 1.87742376, Time: 1.0820
+Steps: 1604000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1608000, Sample Num: 1608000, Cur Loss: 0.35548827, Log Avg loss: 0.93902499, Global Avg Loss: 1.87508943, Time: 1.1119
+Steps: 1608000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1612000, Sample Num: 1612000, Cur Loss: 0.72438514, Log Avg loss: 0.95020097, Global Avg Loss: 1.87279443, Time: 1.5175
+Steps: 1612000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1616000, Sample Num: 1616000, Cur Loss: 0.66124243, Log Avg loss: 0.94598895, Global Avg Loss: 1.87050035, Time: 1.0848
+Steps: 1616000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1620000, Sample Num: 1620000, Cur Loss: 0.61865699, Log Avg loss: 0.94186030, Global Avg Loss: 1.86820741, Time: 1.9122
+Steps: 1620000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1624000, Sample Num: 1624000, Cur Loss: 0.45936772, Log Avg loss: 0.94320655, Global Avg Loss: 1.86592909, Time: 0.4882
+Steps: 1624000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1628000, Sample Num: 1628000, Cur Loss: 0.84276617, Log Avg loss: 0.93257455, Global Avg Loss: 1.86363583, Time: 1.8713
+Steps: 1628000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1632000, Sample Num: 1632000, Cur Loss: 1.42580688, Log Avg loss: 0.93921089, Global Avg Loss: 1.86137009, Time: 2.2290
+Steps: 1632000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1636000, Sample Num: 1636000, Cur Loss: 0.45875877, Log Avg loss: 0.93344449, Global Avg Loss: 1.85910132, Time: 1.5518
+Steps: 1636000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1640000, Sample Num: 1640000, Cur Loss: 0.88128328, Log Avg loss: 0.92844579, Global Avg Loss: 1.85683143, Time: 2.2160
+Steps: 1640000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1644000, Sample Num: 1644000, Cur Loss: 0.69729441, Log Avg loss: 0.94319020, Global Avg Loss: 1.85460846, Time: 2.0667
+Steps: 1644000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1648000, Sample Num: 1648000, Cur Loss: 1.02770555, Log Avg loss: 0.93254686, Global Avg Loss: 1.85237044, Time: 2.0880
+Steps: 1648000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1652000, Sample Num: 1652000, Cur Loss: 1.01773703, Log Avg loss: 0.92861740, Global Avg Loss: 1.85013375, Time: 1.6105
+Steps: 1652000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1656000, Sample Num: 1656000, Cur Loss: 0.99343824, Log Avg loss: 0.92347550, Global Avg Loss: 1.84789545, Time: 1.0817
+Steps: 1656000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1660000, Sample Num: 1660000, Cur Loss: 1.97929323, Log Avg loss: 0.92839005, Global Avg Loss: 1.84567977, Time: 1.0870
+Steps: 1660000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1664000, Sample Num: 1664000, Cur Loss: 1.45213008, Log Avg loss: 0.92811592, Global Avg Loss: 1.84347409, Time: 1.0937
+Steps: 1664000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1668000, Sample Num: 1668000, Cur Loss: 1.06405294, Log Avg loss: 0.92640186, Global Avg Loss: 1.84127488, Time: 2.0732
+Steps: 1668000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1672000, Sample Num: 1672000, Cur Loss: 0.70239502, Log Avg loss: 0.92579133, Global Avg Loss: 1.83908472, Time: 1.0396
+Steps: 1672000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1676000, Sample Num: 1676000, Cur Loss: 0.92857391, Log Avg loss: 0.93857048, Global Avg Loss: 1.83693552, Time: 1.3909
+Steps: 1676000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1680000, Sample Num: 1680000, Cur Loss: 0.30344865, Log Avg loss: 0.93439593, Global Avg Loss: 1.83478662, Time: 1.7265
+Steps: 1680000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1684000, Sample Num: 1684000, Cur Loss: 1.51740146, Log Avg loss: 0.92387018, Global Avg Loss: 1.83262292, Time: 2.0339
+Steps: 1684000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1688000, Sample Num: 1688000, Cur Loss: 0.62137306, Log Avg loss: 0.93695266, Global Avg Loss: 1.83050048, Time: 0.9013
+Steps: 1688000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1692000, Sample Num: 1692000, Cur Loss: 0.52626836, Log Avg loss: 0.94220117, Global Avg Loss: 1.82840048, Time: 0.5630
+Steps: 1692000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1696000, Sample Num: 1696000, Cur Loss: 0.72039992, Log Avg loss: 0.92818883, Global Avg Loss: 1.82627734, Time: 1.4378
+Steps: 1696000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1700000, Sample Num: 1700000, Cur Loss: 0.89187819, Log Avg loss: 0.92773720, Global Avg Loss: 1.82416313, Time: 0.8799
+Steps: 1700000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1704000, Sample Num: 1704000, Cur Loss: 0.72312242, Log Avg loss: 0.92790727, Global Avg Loss: 1.82205924, Time: 1.5688
+Steps: 1704000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1708000, Sample Num: 1708000, Cur Loss: 0.87258512, Log Avg loss: 0.91975918, Global Avg Loss: 1.81994613, Time: 1.0912
+Steps: 1708000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1712000, Sample Num: 1712000, Cur Loss: 0.92659044, Log Avg loss: 0.93319102, Global Avg Loss: 1.81787427, Time: 1.1240
+Steps: 1712000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1716000, Sample Num: 1716000, Cur Loss: 0.94967097, Log Avg loss: 0.93745783, Global Avg Loss: 1.81582202, Time: 0.7339
+Steps: 1716000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1720000, Sample Num: 1720000, Cur Loss: 1.06963980, Log Avg loss: 0.92771473, Global Avg Loss: 1.81375665, Time: 0.9097
+Steps: 1720000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1724000, Sample Num: 1724000, Cur Loss: 0.86646348, Log Avg loss: 0.93005437, Global Avg Loss: 1.81170630, Time: 1.6640
+Steps: 1724000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1728000, Sample Num: 1728000, Cur Loss: 1.16226292, Log Avg loss: 0.93033196, Global Avg Loss: 1.80966608, Time: 2.2411
+Steps: 1728000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1732000, Sample Num: 1732000, Cur Loss: 0.94639188, Log Avg loss: 0.92114998, Global Avg Loss: 1.80761408, Time: 1.0841
+Steps: 1732000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1736000, Sample Num: 1736000, Cur Loss: 0.76723498, Log Avg loss: 0.93493573, Global Avg Loss: 1.80560330, Time: 1.6261
+Steps: 1736000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1740000, Sample Num: 1740000, Cur Loss: 0.61441565, Log Avg loss: 0.91505503, Global Avg Loss: 1.80355606, Time: 1.2648
+Steps: 1740000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1744000, Sample Num: 1744000, Cur Loss: 0.74230003, Log Avg loss: 0.91739890, Global Avg Loss: 1.80152359, Time: 0.8189
+Steps: 1744000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1748000, Sample Num: 1748000, Cur Loss: 0.51374137, Log Avg loss: 0.92689325, Global Avg Loss: 1.79952215, Time: 0.6383
+Steps: 1748000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1752000, Sample Num: 1752000, Cur Loss: 0.86409742, Log Avg loss: 0.93485723, Global Avg Loss: 1.79754803, Time: 0.8704
+Steps: 1752000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1756000, Sample Num: 1756000, Cur Loss: 0.42334539, Log Avg loss: 0.91637207, Global Avg Loss: 1.79554080, Time: 0.5230
+Steps: 1756000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1760000, Sample Num: 1760000, Cur Loss: 0.78967988, Log Avg loss: 0.92180481, Global Avg Loss: 1.79355503, Time: 1.0058
+Steps: 1760000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1764000, Sample Num: 1764000, Cur Loss: 0.71916425, Log Avg loss: 0.93350175, Global Avg Loss: 1.79160480, Time: 1.7413
+Steps: 1764000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1768000, Sample Num: 1768000, Cur Loss: 0.97584724, Log Avg loss: 0.92422076, Global Avg Loss: 1.78964239, Time: 1.3685
+Steps: 1768000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1772000, Sample Num: 1772000, Cur Loss: 0.49163479, Log Avg loss: 0.91880120, Global Avg Loss: 1.78767661, Time: 0.8487
+Steps: 1772000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1776000, Sample Num: 1776000, Cur Loss: 0.84397930, Log Avg loss: 0.93266257, Global Avg Loss: 1.78575090, Time: 0.8204
+Steps: 1776000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1780000, Sample Num: 1780000, Cur Loss: 1.39065146, Log Avg loss: 0.92470307, Global Avg Loss: 1.78381596, Time: 1.0851
+Steps: 1780000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1784000, Sample Num: 1784000, Cur Loss: 0.63198078, Log Avg loss: 0.92158235, Global Avg Loss: 1.78188270, Time: 0.7381
+Steps: 1784000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1788000, Sample Num: 1788000, Cur Loss: 0.75541097, Log Avg loss: 0.91985892, Global Avg Loss: 1.77995424, Time: 1.2989
+Steps: 1788000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1792000, Sample Num: 1792000, Cur Loss: 1.12048864, Log Avg loss: 0.91096929, Global Avg Loss: 1.77801454, Time: 1.0851
+Steps: 1792000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1796000, Sample Num: 1796000, Cur Loss: 0.73193902, Log Avg loss: 0.91629064, Global Avg Loss: 1.77609533, Time: 2.0219
+Steps: 1796000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1800000, Sample Num: 1800000, Cur Loss: 0.75828487, Log Avg loss: 0.91952239, Global Avg Loss: 1.77419184, Time: 0.8755
+Steps: 1800000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1804000, Sample Num: 1804000, Cur Loss: 0.80821413, Log Avg loss: 0.92466090, Global Avg Loss: 1.77230818, Time: 1.1524
+Steps: 1804000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1808000, Sample Num: 1808000, Cur Loss: 0.39801219, Log Avg loss: 0.92400838, Global Avg Loss: 1.77043141, Time: 1.3410
+Steps: 1808000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1812000, Sample Num: 1812000, Cur Loss: 0.65553582, Log Avg loss: 0.92158000, Global Avg Loss: 1.76855756, Time: 0.6970
+Steps: 1812000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1816000, Sample Num: 1816000, Cur Loss: 0.61851144, Log Avg loss: 0.91152676, Global Avg Loss: 1.76666983, Time: 0.6427
+Steps: 1816000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1820000, Sample Num: 1820000, Cur Loss: 1.22868061, Log Avg loss: 0.91429314, Global Avg Loss: 1.76479648, Time: 1.3887
+Steps: 1820000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1824000, Sample Num: 1824000, Cur Loss: 0.97335780, Log Avg loss: 0.90865769, Global Avg Loss: 1.76291898, Time: 1.0918
+Steps: 1824000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1828000, Sample Num: 1828000, Cur Loss: 0.36696735, Log Avg loss: 0.91372385, Global Avg Loss: 1.76106078, Time: 0.5382
+Steps: 1828000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1832000, Sample Num: 1832000, Cur Loss: 0.92621613, Log Avg loss: 0.91669739, Global Avg Loss: 1.75921719, Time: 1.9909
+Steps: 1832000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1836000, Sample Num: 1836000, Cur Loss: 1.21183765, Log Avg loss: 0.91479842, Global Avg Loss: 1.75737750, Time: 1.5264
+Steps: 1836000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1840000, Sample Num: 1840000, Cur Loss: 1.36044478, Log Avg loss: 0.91590458, Global Avg Loss: 1.75554821, Time: 1.3286
+Steps: 1840000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1844000, Sample Num: 1844000, Cur Loss: 0.51801956, Log Avg loss: 0.92363616, Global Avg Loss: 1.75374363, Time: 0.9996
+Steps: 1844000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1848000, Sample Num: 1848000, Cur Loss: 0.78397059, Log Avg loss: 0.91544074, Global Avg Loss: 1.75192912, Time: 1.1860
+Steps: 1848000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1852000, Sample Num: 1852000, Cur Loss: 0.39193395, Log Avg loss: 0.91613751, Global Avg Loss: 1.75012396, Time: 1.8323
+Steps: 1852000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1856000, Sample Num: 1856000, Cur Loss: 0.65694624, Log Avg loss: 0.91874346, Global Avg Loss: 1.74833219, Time: 0.6177
+Steps: 1856000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1860000, Sample Num: 1860000, Cur Loss: 0.73804909, Log Avg loss: 0.91558018, Global Avg Loss: 1.74654133, Time: 1.0357
+Steps: 1860000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1864000, Sample Num: 1864000, Cur Loss: 1.20330167, Log Avg loss: 0.90861905, Global Avg Loss: 1.74474321, Time: 1.0822
+Steps: 1864000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1868000, Sample Num: 1868000, Cur Loss: 0.84612781, Log Avg loss: 0.92040525, Global Avg Loss: 1.74297803, Time: 1.7176
+Steps: 1868000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1872000, Sample Num: 1872000, Cur Loss: 1.80649817, Log Avg loss: 0.91489405, Global Avg Loss: 1.74120862, Time: 2.4430
+Steps: 1872000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1876000, Sample Num: 1876000, Cur Loss: 1.74048996, Log Avg loss: 0.90347273, Global Avg Loss: 1.73942240, Time: 1.9814
+Steps: 1876000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1880000, Sample Num: 1880000, Cur Loss: 1.97000921, Log Avg loss: 0.92056100, Global Avg Loss: 1.73768015, Time: 1.5329
+Steps: 1880000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1884000, Sample Num: 1884000, Cur Loss: 1.03550041, Log Avg loss: 0.90704155, Global Avg Loss: 1.73591658, Time: 1.5656
+Steps: 1884000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1888000, Sample Num: 1888000, Cur Loss: 0.51535124, Log Avg loss: 0.91033655, Global Avg Loss: 1.73416747, Time: 0.5360
+Steps: 1888000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1892000, Sample Num: 1892000, Cur Loss: 1.02721083, Log Avg loss: 0.91111124, Global Avg Loss: 1.73242739, Time: 1.6281
+Steps: 1892000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1896000, Sample Num: 1896000, Cur Loss: 1.26563382, Log Avg loss: 0.91645870, Global Avg Loss: 1.73070594, Time: 1.0937
+Steps: 1896000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1900000, Sample Num: 1900000, Cur Loss: 0.70188242, Log Avg loss: 0.92096374, Global Avg Loss: 1.72900122, Time: 1.7129
+Steps: 1900000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1904000, Sample Num: 1904000, Cur Loss: 1.66047025, Log Avg loss: 0.91914810, Global Avg Loss: 1.72729985, Time: 2.3369
+Steps: 1904000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1908000, Sample Num: 1908000, Cur Loss: 1.27846658, Log Avg loss: 0.92224786, Global Avg Loss: 1.72561211, Time: 1.0941
+Steps: 1908000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1912000, Sample Num: 1912000, Cur Loss: 0.97478533, Log Avg loss: 0.91080347, Global Avg Loss: 1.72390749, Time: 1.0176
+Steps: 1912000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1916000, Sample Num: 1916000, Cur Loss: 1.70715928, Log Avg loss: 0.91415096, Global Avg Loss: 1.72221697, Time: 2.2934
+Steps: 1916000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1920000, Sample Num: 1920000, Cur Loss: 0.72867340, Log Avg loss: 0.90531214, Global Avg Loss: 1.72051509, Time: 1.1989
+Steps: 1920000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1924000, Sample Num: 1924000, Cur Loss: 0.83974409, Log Avg loss: 0.90144125, Global Avg Loss: 1.71881223, Time: 1.1022
+Steps: 1924000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1928000, Sample Num: 1928000, Cur Loss: 0.50695509, Log Avg loss: 0.90651779, Global Avg Loss: 1.71712697, Time: 0.7534
+Steps: 1928000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1932000, Sample Num: 1932000, Cur Loss: 0.63455886, Log Avg loss: 0.90927051, Global Avg Loss: 1.71545439, Time: 1.5305
+Steps: 1932000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1936000, Sample Num: 1936000, Cur Loss: 0.62807810, Log Avg loss: 0.91810701, Global Avg Loss: 1.71380698, Time: 0.8012
+Steps: 1936000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1940000, Sample Num: 1940000, Cur Loss: 0.94503468, Log Avg loss: 0.90090089, Global Avg Loss: 1.71213089, Time: 1.0910
+Steps: 1940000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1944000, Sample Num: 1944000, Cur Loss: 0.45406297, Log Avg loss: 0.91016188, Global Avg Loss: 1.71048074, Time: 0.5394
+Steps: 1944000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1948000, Sample Num: 1948000, Cur Loss: 1.99472964, Log Avg loss: 0.92368198, Global Avg Loss: 1.70886514, Time: 1.7098
+Steps: 1948000, Updated lr: 0.000249
+Training, Epoch: 0001, Batch: 1952000, Sample Num: 1952000, Cur Loss: 0.74726021, Log Avg loss: 0.90164134, Global Avg Loss: 1.70721099, Time: 2.1257
+Steps: 1952000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1956000, Sample Num: 1956000, Cur Loss: 0.50467962, Log Avg loss: 0.90190346, Global Avg Loss: 1.70556415, Time: 1.9679
+Steps: 1956000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1960000, Sample Num: 1960000, Cur Loss: 1.02110851, Log Avg loss: 0.90406311, Global Avg Loss: 1.70392843, Time: 1.3713
+Steps: 1960000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1964000, Sample Num: 1964000, Cur Loss: 0.68439162, Log Avg loss: 0.89394360, Global Avg Loss: 1.70227877, Time: 0.5119
+Steps: 1964000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1968000, Sample Num: 1968000, Cur Loss: 0.73924690, Log Avg loss: 0.90544828, Global Avg Loss: 1.70065919, Time: 0.8222
+Steps: 1968000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1972000, Sample Num: 1972000, Cur Loss: 0.65393311, Log Avg loss: 0.91006232, Global Avg Loss: 1.69905555, Time: 2.0156
+Steps: 1972000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1976000, Sample Num: 1976000, Cur Loss: 0.69450778, Log Avg loss: 0.89830570, Global Avg Loss: 1.69743460, Time: 0.8162
+Steps: 1976000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1980000, Sample Num: 1980000, Cur Loss: 0.97631240, Log Avg loss: 0.90328525, Global Avg Loss: 1.69583026, Time: 1.0914
+Steps: 1980000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1984000, Sample Num: 1984000, Cur Loss: 1.09355021, Log Avg loss: 0.89003618, Global Avg Loss: 1.69420567, Time: 1.6906
+Steps: 1984000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1988000, Sample Num: 1988000, Cur Loss: 0.87725961, Log Avg loss: 0.90307991, Global Avg Loss: 1.69261387, Time: 1.8583
+Steps: 1988000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1992000, Sample Num: 1992000, Cur Loss: 0.43817660, Log Avg loss: 0.90570586, Global Avg Loss: 1.69103373, Time: 0.5443
+Steps: 1992000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 1996000, Sample Num: 1996000, Cur Loss: 1.24485385, Log Avg loss: 0.91633185, Global Avg Loss: 1.68948122, Time: 1.3748
+Steps: 1996000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2000000, Sample Num: 2000000, Cur Loss: 0.97338706, Log Avg loss: 0.90580224, Global Avg Loss: 1.68791387, Time: 1.0382
+Steps: 2000000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2004000, Sample Num: 2004000, Cur Loss: 1.14714825, Log Avg loss: 0.90325618, Global Avg Loss: 1.68634768, Time: 1.0864
+Steps: 2004000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2008000, Sample Num: 2008000, Cur Loss: 0.83613127, Log Avg loss: 0.90469100, Global Avg Loss: 1.68479060, Time: 0.6926
+Steps: 2008000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2012000, Sample Num: 2012000, Cur Loss: 0.81868988, Log Avg loss: 0.90139451, Global Avg Loss: 1.68323315, Time: 1.3108
+Steps: 2012000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2016000, Sample Num: 2016000, Cur Loss: 0.60262579, Log Avg loss: 0.91003231, Global Avg Loss: 1.68169902, Time: 0.6340
+Steps: 2016000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2020000, Sample Num: 2020000, Cur Loss: 0.96308708, Log Avg loss: 0.90466132, Global Avg Loss: 1.68016033, Time: 0.8989
+Steps: 2020000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2024000, Sample Num: 2024000, Cur Loss: 0.57847142, Log Avg loss: 0.90813594, Global Avg Loss: 1.67863459, Time: 0.9092
+Steps: 2024000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2028000, Sample Num: 2028000, Cur Loss: 0.91387397, Log Avg loss: 0.90021308, Global Avg Loss: 1.67709925, Time: 1.0892
+Steps: 2028000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2032000, Sample Num: 2032000, Cur Loss: 0.77132535, Log Avg loss: 0.89816720, Global Avg Loss: 1.67556591, Time: 1.4135
+Steps: 2032000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2036000, Sample Num: 2036000, Cur Loss: 0.57732505, Log Avg loss: 0.89432927, Global Avg Loss: 1.67403107, Time: 1.0996
+Steps: 2036000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2040000, Sample Num: 2040000, Cur Loss: 0.91972488, Log Avg loss: 0.90060418, Global Avg Loss: 1.67251455, Time: 1.4162
+Steps: 2040000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2044000, Sample Num: 2044000, Cur Loss: 0.57387167, Log Avg loss: 0.90494021, Global Avg Loss: 1.67101244, Time: 1.5349
+Steps: 2044000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2048000, Sample Num: 2048000, Cur Loss: 0.55470842, Log Avg loss: 0.88075203, Global Avg Loss: 1.66946897, Time: 1.6731
+Steps: 2048000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2052000, Sample Num: 2052000, Cur Loss: 0.78063422, Log Avg loss: 0.90067744, Global Avg Loss: 1.66797035, Time: 1.6193
+Steps: 2052000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2056000, Sample Num: 2056000, Cur Loss: 0.69533640, Log Avg loss: 0.88830699, Global Avg Loss: 1.66645349, Time: 0.8439
+Steps: 2056000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2060000, Sample Num: 2060000, Cur Loss: 0.74332702, Log Avg loss: 0.88842291, Global Avg Loss: 1.66494275, Time: 0.7850
+Steps: 2060000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2064000, Sample Num: 2064000, Cur Loss: 1.03575218, Log Avg loss: 0.89676215, Global Avg Loss: 1.66345403, Time: 1.7307
+Steps: 2064000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2068000, Sample Num: 2068000, Cur Loss: 1.15199888, Log Avg loss: 0.90638009, Global Avg Loss: 1.66198967, Time: 2.1055
+Steps: 2068000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2072000, Sample Num: 2072000, Cur Loss: 0.75055569, Log Avg loss: 0.89932432, Global Avg Loss: 1.66051734, Time: 1.2754
+Steps: 2072000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2076000, Sample Num: 2076000, Cur Loss: 1.12807047, Log Avg loss: 0.88615986, Global Avg Loss: 1.65902533, Time: 1.0827
+Steps: 2076000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2080000, Sample Num: 2080000, Cur Loss: 0.64760685, Log Avg loss: 0.88671117, Global Avg Loss: 1.65754011, Time: 1.7933
+Steps: 2080000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2084000, Sample Num: 2084000, Cur Loss: 1.33431613, Log Avg loss: 0.88983030, Global Avg Loss: 1.65606657, Time: 2.0459
+Steps: 2084000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2088000, Sample Num: 2088000, Cur Loss: 0.85470790, Log Avg loss: 0.88658916, Global Avg Loss: 1.65459248, Time: 0.9247
+Steps: 2088000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2092000, Sample Num: 2092000, Cur Loss: 1.05742395, Log Avg loss: 0.88983432, Global Avg Loss: 1.65313023, Time: 0.6502
+Steps: 2092000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2096000, Sample Num: 2096000, Cur Loss: 1.60235202, Log Avg loss: 0.88979945, Global Avg Loss: 1.65167349, Time: 1.0927
+Steps: 2096000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2100000, Sample Num: 2100000, Cur Loss: 0.62445372, Log Avg loss: 0.89651443, Global Avg Loss: 1.65023509, Time: 1.7747
+Steps: 2100000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2104000, Sample Num: 2104000, Cur Loss: 2.59221983, Log Avg loss: 0.90215965, Global Avg Loss: 1.64881289, Time: 2.4804
+Steps: 2104000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2108000, Sample Num: 2108000, Cur Loss: 0.96104199, Log Avg loss: 0.89153829, Global Avg Loss: 1.64737594, Time: 1.0813
+Steps: 2108000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2112000, Sample Num: 2112000, Cur Loss: 0.64955908, Log Avg loss: 0.88715722, Global Avg Loss: 1.64593613, Time: 0.7131
+Steps: 2112000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2116000, Sample Num: 2116000, Cur Loss: 0.63747317, Log Avg loss: 0.90212964, Global Avg Loss: 1.64453007, Time: 0.7820
+Steps: 2116000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2120000, Sample Num: 2120000, Cur Loss: 1.39161599, Log Avg loss: 0.89193904, Global Avg Loss: 1.64311009, Time: 1.0892
+Steps: 2120000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2124000, Sample Num: 2124000, Cur Loss: 0.48596084, Log Avg loss: 0.89317936, Global Avg Loss: 1.64169779, Time: 0.5762
+Steps: 2124000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2128000, Sample Num: 2128000, Cur Loss: 0.86097074, Log Avg loss: 0.89835745, Global Avg Loss: 1.64030053, Time: 0.9770
+Steps: 2128000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2132000, Sample Num: 2132000, Cur Loss: 0.95659792, Log Avg loss: 0.89885913, Global Avg Loss: 1.63890946, Time: 1.3342
+Steps: 2132000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2136000, Sample Num: 2136000, Cur Loss: 0.79689419, Log Avg loss: 0.89808287, Global Avg Loss: 1.63752215, Time: 1.2394
+Steps: 2136000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2140000, Sample Num: 2140000, Cur Loss: 1.47747731, Log Avg loss: 0.89287309, Global Avg Loss: 1.63613028, Time: 1.0851
+Steps: 2140000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2144000, Sample Num: 2144000, Cur Loss: 1.01032531, Log Avg loss: 0.90205913, Global Avg Loss: 1.63476074, Time: 1.7163
+Steps: 2144000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2148000, Sample Num: 2148000, Cur Loss: 0.31453806, Log Avg loss: 0.89468951, Global Avg Loss: 1.63338258, Time: 0.5278
+Steps: 2148000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2152000, Sample Num: 2152000, Cur Loss: 0.77488846, Log Avg loss: 0.89652491, Global Avg Loss: 1.63201296, Time: 0.8301
+Steps: 2152000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2156000, Sample Num: 2156000, Cur Loss: 0.91209048, Log Avg loss: 0.89005538, Global Avg Loss: 1.63063641, Time: 0.9760
+Steps: 2156000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2160000, Sample Num: 2160000, Cur Loss: 1.46988368, Log Avg loss: 0.88710130, Global Avg Loss: 1.62925950, Time: 1.0874
+Steps: 2160000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2164000, Sample Num: 2164000, Cur Loss: 1.11259270, Log Avg loss: 0.87462993, Global Avg Loss: 1.62786462, Time: 2.0107
+Steps: 2164000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2168000, Sample Num: 2168000, Cur Loss: 0.69357258, Log Avg loss: 0.88233686, Global Avg Loss: 1.62648911, Time: 1.9980
+Steps: 2168000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2172000, Sample Num: 2172000, Cur Loss: 0.50847441, Log Avg loss: 0.89640624, Global Avg Loss: 1.62514457, Time: 0.8333
+Steps: 2172000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2176000, Sample Num: 2176000, Cur Loss: 0.67311931, Log Avg loss: 0.88803487, Global Avg Loss: 1.62378959, Time: 0.7516
+Steps: 2176000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2180000, Sample Num: 2180000, Cur Loss: 0.74794316, Log Avg loss: 0.89994914, Global Avg Loss: 1.62246144, Time: 0.6126
+Steps: 2180000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2184000, Sample Num: 2184000, Cur Loss: 0.63649225, Log Avg loss: 0.89999529, Global Avg Loss: 1.62113824, Time: 0.5408
+Steps: 2184000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2188000, Sample Num: 2188000, Cur Loss: 0.85289556, Log Avg loss: 0.87491593, Global Avg Loss: 1.61977403, Time: 0.7874
+Steps: 2188000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2192000, Sample Num: 2192000, Cur Loss: 0.88902694, Log Avg loss: 0.89901387, Global Avg Loss: 1.61845878, Time: 2.3365
+Steps: 2192000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2196000, Sample Num: 2196000, Cur Loss: 2.60383511, Log Avg loss: 0.88525843, Global Avg Loss: 1.61712326, Time: 1.1887
+Steps: 2196000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2200000, Sample Num: 2200000, Cur Loss: 0.93527138, Log Avg loss: 0.88072965, Global Avg Loss: 1.61578436, Time: 0.9731
+Steps: 2200000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2204000, Sample Num: 2204000, Cur Loss: 0.67563879, Log Avg loss: 0.88289952, Global Avg Loss: 1.61445426, Time: 0.5328
+Steps: 2204000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2208000, Sample Num: 2208000, Cur Loss: 0.79845119, Log Avg loss: 0.87786896, Global Avg Loss: 1.61311987, Time: 1.9082
+Steps: 2208000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2212000, Sample Num: 2212000, Cur Loss: 1.18250084, Log Avg loss: 0.88185199, Global Avg Loss: 1.61179750, Time: 2.0308
+Steps: 2212000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2216000, Sample Num: 2216000, Cur Loss: 2.06710577, Log Avg loss: 0.89017559, Global Avg Loss: 1.61049494, Time: 1.7917
+Steps: 2216000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2220000, Sample Num: 2220000, Cur Loss: 0.56020921, Log Avg loss: 0.88139481, Global Avg Loss: 1.60918124, Time: 1.0816
+Steps: 2220000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2224000, Sample Num: 2224000, Cur Loss: 0.84969205, Log Avg loss: 0.89572861, Global Avg Loss: 1.60789805, Time: 0.7840
+Steps: 2224000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2228000, Sample Num: 2228000, Cur Loss: 1.34724987, Log Avg loss: 0.88105788, Global Avg Loss: 1.60659314, Time: 1.0672
+Steps: 2228000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2232000, Sample Num: 2232000, Cur Loss: 1.33829582, Log Avg loss: 0.87637187, Global Avg Loss: 1.60528450, Time: 1.6312
+Steps: 2232000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2236000, Sample Num: 2236000, Cur Loss: 1.19215143, Log Avg loss: 0.89137677, Global Avg Loss: 1.60400738, Time: 2.2400
+Steps: 2236000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2240000, Sample Num: 2240000, Cur Loss: 1.14139819, Log Avg loss: 0.88559232, Global Avg Loss: 1.60272450, Time: 1.5470
+Steps: 2240000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2244000, Sample Num: 2244000, Cur Loss: 0.77155018, Log Avg loss: 0.88280121, Global Avg Loss: 1.60144121, Time: 1.1212
+Steps: 2244000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2248000, Sample Num: 2248000, Cur Loss: 0.78849506, Log Avg loss: 0.89215609, Global Avg Loss: 1.60017914, Time: 1.3553
+Steps: 2248000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2252000, Sample Num: 2252000, Cur Loss: 0.69761914, Log Avg loss: 0.88327411, Global Avg Loss: 1.59890577, Time: 0.8548
+Steps: 2252000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2256000, Sample Num: 2256000, Cur Loss: 0.57838392, Log Avg loss: 0.88180085, Global Avg Loss: 1.59763431, Time: 0.5007
+Steps: 2256000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2260000, Sample Num: 2260000, Cur Loss: 1.58855808, Log Avg loss: 0.88287236, Global Avg Loss: 1.59636924, Time: 1.1543
+Steps: 2260000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2264000, Sample Num: 2264000, Cur Loss: 0.64292479, Log Avg loss: 0.88933247, Global Avg Loss: 1.59512006, Time: 0.9680
+Steps: 2264000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2268000, Sample Num: 2268000, Cur Loss: 1.42879176, Log Avg loss: 0.88067418, Global Avg Loss: 1.59386002, Time: 1.0855
+Steps: 2268000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2272000, Sample Num: 2272000, Cur Loss: 0.66897786, Log Avg loss: 0.88306975, Global Avg Loss: 1.59260862, Time: 2.1124
+Steps: 2272000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2276000, Sample Num: 2276000, Cur Loss: 0.80087429, Log Avg loss: 0.88609787, Global Avg Loss: 1.59136695, Time: 0.9071
+Steps: 2276000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2280000, Sample Num: 2280000, Cur Loss: 0.96906877, Log Avg loss: 0.88546467, Global Avg Loss: 1.59012853, Time: 1.0940
+Steps: 2280000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2284000, Sample Num: 2284000, Cur Loss: 0.67743677, Log Avg loss: 0.87695654, Global Avg Loss: 1.58887954, Time: 1.3665
+Steps: 2284000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2288000, Sample Num: 2288000, Cur Loss: 0.83952582, Log Avg loss: 0.88256486, Global Avg Loss: 1.58764472, Time: 2.0150
+Steps: 2288000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2292000, Sample Num: 2292000, Cur Loss: 0.72740769, Log Avg loss: 0.88919417, Global Avg Loss: 1.58642579, Time: 2.1707
+Steps: 2292000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2296000, Sample Num: 2296000, Cur Loss: 1.41060853, Log Avg loss: 0.88849423, Global Avg Loss: 1.58520988, Time: 2.0201
+Steps: 2296000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2300000, Sample Num: 2300000, Cur Loss: 0.71262914, Log Avg loss: 0.88431658, Global Avg Loss: 1.58399093, Time: 0.9606
+Steps: 2300000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2304000, Sample Num: 2304000, Cur Loss: 0.66853815, Log Avg loss: 0.89041561, Global Avg Loss: 1.58278681, Time: 1.4516
+Steps: 2304000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2308000, Sample Num: 2308000, Cur Loss: 0.85337228, Log Avg loss: 0.87923167, Global Avg Loss: 1.58156748, Time: 1.0381
+Steps: 2308000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2312000, Sample Num: 2312000, Cur Loss: 1.03360796, Log Avg loss: 0.87646486, Global Avg Loss: 1.58034758, Time: 1.4151
+Steps: 2312000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2316000, Sample Num: 2316000, Cur Loss: 0.60779518, Log Avg loss: 0.88643525, Global Avg Loss: 1.57914911, Time: 1.6136
+Steps: 2316000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2320000, Sample Num: 2320000, Cur Loss: 1.36921561, Log Avg loss: 0.86517502, Global Avg Loss: 1.57791812, Time: 1.6198
+Steps: 2320000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2324000, Sample Num: 2324000, Cur Loss: 0.83283484, Log Avg loss: 0.88744002, Global Avg Loss: 1.57672969, Time: 2.1447
+Steps: 2324000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2328000, Sample Num: 2328000, Cur Loss: 1.35818648, Log Avg loss: 0.87370796, Global Avg Loss: 1.57552175, Time: 2.0944
+Steps: 2328000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2332000, Sample Num: 2332000, Cur Loss: 0.68864900, Log Avg loss: 0.87579599, Global Avg Loss: 1.57432153, Time: 0.7830
+Steps: 2332000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2336000, Sample Num: 2336000, Cur Loss: 1.23989630, Log Avg loss: 0.87601510, Global Avg Loss: 1.57312580, Time: 2.2553
+Steps: 2336000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2340000, Sample Num: 2340000, Cur Loss: 0.85063159, Log Avg loss: 0.87973143, Global Avg Loss: 1.57194051, Time: 0.9594
+Steps: 2340000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2344000, Sample Num: 2344000, Cur Loss: 1.42436862, Log Avg loss: 0.88777062, Global Avg Loss: 1.57077299, Time: 1.9948
+Steps: 2344000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2348000, Sample Num: 2348000, Cur Loss: 0.54217434, Log Avg loss: 0.87921323, Global Avg Loss: 1.56959486, Time: 2.0520
+Steps: 2348000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2352000, Sample Num: 2352000, Cur Loss: 0.47895092, Log Avg loss: 0.86495272, Global Avg Loss: 1.56839649, Time: 1.3215
+Steps: 2352000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2356000, Sample Num: 2356000, Cur Loss: 1.13717854, Log Avg loss: 0.87578000, Global Avg Loss: 1.56722057, Time: 1.8391
+Steps: 2356000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2360000, Sample Num: 2360000, Cur Loss: 0.51403648, Log Avg loss: 0.87651231, Global Avg Loss: 1.56604988, Time: 0.7475
+Steps: 2360000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2364000, Sample Num: 2364000, Cur Loss: 0.90594542, Log Avg loss: 0.86819907, Global Avg Loss: 1.56486908, Time: 1.8557
+Steps: 2364000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2368000, Sample Num: 2368000, Cur Loss: 0.57737380, Log Avg loss: 0.86930483, Global Avg Loss: 1.56369414, Time: 0.5609
+Steps: 2368000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2372000, Sample Num: 2372000, Cur Loss: 0.92124951, Log Avg loss: 0.87320721, Global Avg Loss: 1.56252975, Time: 1.8376
+Steps: 2372000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2376000, Sample Num: 2376000, Cur Loss: 0.68846995, Log Avg loss: 0.87472579, Global Avg Loss: 1.56137183, Time: 2.0260
+Steps: 2376000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2380000, Sample Num: 2380000, Cur Loss: 0.41073668, Log Avg loss: 0.87896617, Global Avg Loss: 1.56022493, Time: 0.5409
+Steps: 2380000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2384000, Sample Num: 2384000, Cur Loss: 0.62403309, Log Avg loss: 0.88222431, Global Avg Loss: 1.55908734, Time: 0.8164
+Steps: 2384000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2388000, Sample Num: 2388000, Cur Loss: 0.76559240, Log Avg loss: 0.88681962, Global Avg Loss: 1.55796127, Time: 1.0820
+Steps: 2388000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2392000, Sample Num: 2392000, Cur Loss: 0.86505795, Log Avg loss: 0.87515727, Global Avg Loss: 1.55681945, Time: 1.1036
+Steps: 2392000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2396000, Sample Num: 2396000, Cur Loss: 1.06659114, Log Avg loss: 0.88561634, Global Avg Loss: 1.55569891, Time: 1.0896
+Steps: 2396000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2400000, Sample Num: 2400000, Cur Loss: 0.93839425, Log Avg loss: 0.87460529, Global Avg Loss: 1.55456376, Time: 1.2093
+Steps: 2400000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2404000, Sample Num: 2404000, Cur Loss: 0.52242130, Log Avg loss: 0.87131205, Global Avg Loss: 1.55342690, Time: 0.6044
+Steps: 2404000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2408000, Sample Num: 2408000, Cur Loss: 1.34576273, Log Avg loss: 0.87703259, Global Avg Loss: 1.55230332, Time: 1.0814
+Steps: 2408000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2412000, Sample Num: 2412000, Cur Loss: 0.76770568, Log Avg loss: 0.87157814, Global Avg Loss: 1.55117442, Time: 1.4964
+Steps: 2412000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2416000, Sample Num: 2416000, Cur Loss: 0.85853195, Log Avg loss: 0.87040902, Global Avg Loss: 1.55004733, Time: 1.0864
+Steps: 2416000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2420000, Sample Num: 2420000, Cur Loss: 1.21776426, Log Avg loss: 0.87696942, Global Avg Loss: 1.54893480, Time: 1.1167
+Steps: 2420000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2424000, Sample Num: 2424000, Cur Loss: 0.76543760, Log Avg loss: 0.86293745, Global Avg Loss: 1.54780279, Time: 1.6185
+Steps: 2424000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2428000, Sample Num: 2428000, Cur Loss: 0.63345814, Log Avg loss: 0.87595643, Global Avg Loss: 1.54669596, Time: 1.2753
+Steps: 2428000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2432000, Sample Num: 2432000, Cur Loss: 0.69024551, Log Avg loss: 0.86779207, Global Avg Loss: 1.54557935, Time: 0.6947
+Steps: 2432000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2436000, Sample Num: 2436000, Cur Loss: 0.91934872, Log Avg loss: 0.88235091, Global Avg Loss: 1.54449030, Time: 1.7882
+Steps: 2436000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2440000, Sample Num: 2440000, Cur Loss: 1.29246306, Log Avg loss: 0.86873870, Global Avg Loss: 1.54338251, Time: 1.0869
+Steps: 2440000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2444000, Sample Num: 2444000, Cur Loss: 1.53984201, Log Avg loss: 0.87764119, Global Avg Loss: 1.54229292, Time: 1.0814
+Steps: 2444000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2448000, Sample Num: 2448000, Cur Loss: 1.54221082, Log Avg loss: 0.87680104, Global Avg Loss: 1.54120551, Time: 1.0811
+Steps: 2448000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2452000, Sample Num: 2452000, Cur Loss: 0.67919070, Log Avg loss: 0.87216744, Global Avg Loss: 1.54011410, Time: 0.8314
+Steps: 2452000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2456000, Sample Num: 2456000, Cur Loss: 0.92938805, Log Avg loss: 0.88090484, Global Avg Loss: 1.53904047, Time: 1.1604
+Steps: 2456000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2460000, Sample Num: 2460000, Cur Loss: 1.39634049, Log Avg loss: 0.88215654, Global Avg Loss: 1.53797236, Time: 1.0857
+Steps: 2460000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2464000, Sample Num: 2464000, Cur Loss: 0.41060176, Log Avg loss: 0.87320223, Global Avg Loss: 1.53689319, Time: 0.4878
+Steps: 2464000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2468000, Sample Num: 2468000, Cur Loss: 0.71713603, Log Avg loss: 0.86998075, Global Avg Loss: 1.53581229, Time: 2.1804
+Steps: 2468000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2472000, Sample Num: 2472000, Cur Loss: 0.62851536, Log Avg loss: 0.86838804, Global Avg Loss: 1.53473232, Time: 2.0439
+Steps: 2472000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2476000, Sample Num: 2476000, Cur Loss: 0.97041088, Log Avg loss: 0.86566063, Global Avg Loss: 1.53365143, Time: 1.0817
+Steps: 2476000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2480000, Sample Num: 2480000, Cur Loss: 0.72000831, Log Avg loss: 0.86975868, Global Avg Loss: 1.53258063, Time: 0.6364
+Steps: 2480000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2484000, Sample Num: 2484000, Cur Loss: 0.93422198, Log Avg loss: 0.86725393, Global Avg Loss: 1.53150925, Time: 1.0862
+Steps: 2484000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2488000, Sample Num: 2488000, Cur Loss: 0.74397260, Log Avg loss: 0.86511049, Global Avg Loss: 1.53043787, Time: 1.3320
+Steps: 2488000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2492000, Sample Num: 2492000, Cur Loss: 0.41172698, Log Avg loss: 0.88166401, Global Avg Loss: 1.52939650, Time: 1.8505
+Steps: 2492000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2496000, Sample Num: 2496000, Cur Loss: 0.69441295, Log Avg loss: 0.86340513, Global Avg Loss: 1.52832921, Time: 0.7838
+Steps: 2496000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2500000, Sample Num: 2500000, Cur Loss: 0.70702261, Log Avg loss: 0.86438552, Global Avg Loss: 1.52726690, Time: 0.8259
+Steps: 2500000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2504000, Sample Num: 2504000, Cur Loss: 1.08572221, Log Avg loss: 0.85933610, Global Avg Loss: 1.52619992, Time: 1.6097
+Steps: 2504000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2508000, Sample Num: 2508000, Cur Loss: 0.98271894, Log Avg loss: 0.87735377, Global Avg Loss: 1.52516508, Time: 1.8074
+Steps: 2508000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2512000, Sample Num: 2512000, Cur Loss: 1.15263224, Log Avg loss: 0.87648077, Global Avg Loss: 1.52413214, Time: 1.0956
+Steps: 2512000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2516000, Sample Num: 2516000, Cur Loss: 0.94243473, Log Avg loss: 0.86538464, Global Avg Loss: 1.52308485, Time: 0.8971
+Steps: 2516000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2520000, Sample Num: 2520000, Cur Loss: 1.61422622, Log Avg loss: 0.87292164, Global Avg Loss: 1.52205284, Time: 2.3084
+Steps: 2520000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2524000, Sample Num: 2524000, Cur Loss: 0.99823904, Log Avg loss: 0.87299750, Global Avg Loss: 1.52102423, Time: 1.0815
+Steps: 2524000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2528000, Sample Num: 2528000, Cur Loss: 0.70013767, Log Avg loss: 0.86373033, Global Avg Loss: 1.51998420, Time: 0.6175
+Steps: 2528000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2532000, Sample Num: 2532000, Cur Loss: 0.63314986, Log Avg loss: 0.86465431, Global Avg Loss: 1.51894893, Time: 0.5256
+Steps: 2532000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2536000, Sample Num: 2536000, Cur Loss: 0.69192356, Log Avg loss: 0.85793096, Global Avg Loss: 1.51790631, Time: 0.7287
+Steps: 2536000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2540000, Sample Num: 2540000, Cur Loss: 0.70996410, Log Avg loss: 0.87062182, Global Avg Loss: 1.51688697, Time: 2.0719
+Steps: 2540000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2544000, Sample Num: 2544000, Cur Loss: 0.80504477, Log Avg loss: 0.86416245, Global Avg Loss: 1.51586067, Time: 1.2635
+Steps: 2544000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2548000, Sample Num: 2548000, Cur Loss: 0.94396740, Log Avg loss: 0.87266689, Global Avg Loss: 1.51485095, Time: 1.0816
+Steps: 2548000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2552000, Sample Num: 2552000, Cur Loss: 0.83767891, Log Avg loss: 0.86308238, Global Avg Loss: 1.51382937, Time: 1.0825
+Steps: 2552000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2556000, Sample Num: 2556000, Cur Loss: 0.61836326, Log Avg loss: 0.86070584, Global Avg Loss: 1.51280726, Time: 1.3429
+Steps: 2556000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2560000, Sample Num: 2560000, Cur Loss: 0.66456145, Log Avg loss: 0.87486308, Global Avg Loss: 1.51181048, Time: 1.0758
+Steps: 2560000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2564000, Sample Num: 2564000, Cur Loss: 1.39295280, Log Avg loss: 0.86252739, Global Avg Loss: 1.51079755, Time: 1.5631
+Steps: 2564000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2568000, Sample Num: 2568000, Cur Loss: 1.35424912, Log Avg loss: 0.84899621, Global Avg Loss: 1.50976671, Time: 2.3695
+Steps: 2568000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2572000, Sample Num: 2572000, Cur Loss: 1.72223961, Log Avg loss: 0.86739325, Global Avg Loss: 1.50876769, Time: 2.0571
+Steps: 2572000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2576000, Sample Num: 2576000, Cur Loss: 2.09948969, Log Avg loss: 0.87256218, Global Avg Loss: 1.50777979, Time: 1.0811
+Steps: 2576000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2580000, Sample Num: 2580000, Cur Loss: 1.18352997, Log Avg loss: 0.86285512, Global Avg Loss: 1.50677991, Time: 1.2673
+Steps: 2580000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2584000, Sample Num: 2584000, Cur Loss: 0.69741547, Log Avg loss: 0.87550296, Global Avg Loss: 1.50580270, Time: 1.9098
+Steps: 2584000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2588000, Sample Num: 2588000, Cur Loss: 1.38395023, Log Avg loss: 0.86693238, Global Avg Loss: 1.50481526, Time: 1.3877
+Steps: 2588000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2592000, Sample Num: 2592000, Cur Loss: 0.62007928, Log Avg loss: 0.85607098, Global Avg Loss: 1.50381411, Time: 1.3980
+Steps: 2592000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2596000, Sample Num: 2596000, Cur Loss: 0.84154916, Log Avg loss: 0.86760166, Global Avg Loss: 1.50283382, Time: 1.8261
+Steps: 2596000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2600000, Sample Num: 2600000, Cur Loss: 1.10603130, Log Avg loss: 0.85963603, Global Avg Loss: 1.50184428, Time: 1.5137
+Steps: 2600000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2604000, Sample Num: 2604000, Cur Loss: 0.74871486, Log Avg loss: 0.85649130, Global Avg Loss: 1.50085296, Time: 0.9072
+Steps: 2604000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2608000, Sample Num: 2608000, Cur Loss: 0.71644360, Log Avg loss: 0.86410739, Global Avg Loss: 1.49987635, Time: 0.8207
+Steps: 2608000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2612000, Sample Num: 2612000, Cur Loss: 0.53989154, Log Avg loss: 0.87498711, Global Avg Loss: 1.49891940, Time: 1.6653
+Steps: 2612000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2616000, Sample Num: 2616000, Cur Loss: 0.85899663, Log Avg loss: 0.87868198, Global Avg Loss: 1.49797103, Time: 1.6740
+Steps: 2616000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2620000, Sample Num: 2620000, Cur Loss: 0.55797040, Log Avg loss: 0.87908743, Global Avg Loss: 1.49702617, Time: 1.4148
+Steps: 2620000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2624000, Sample Num: 2624000, Cur Loss: 0.85597777, Log Avg loss: 0.85934410, Global Avg Loss: 1.49605409, Time: 0.9126
+Steps: 2624000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2628000, Sample Num: 2628000, Cur Loss: 1.05322731, Log Avg loss: 0.85874211, Global Avg Loss: 1.49508406, Time: 2.0877
+Steps: 2628000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2632000, Sample Num: 2632000, Cur Loss: 0.69303578, Log Avg loss: 0.86104129, Global Avg Loss: 1.49412046, Time: 0.7828
+Steps: 2632000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2636000, Sample Num: 2636000, Cur Loss: 2.37364864, Log Avg loss: 0.86571378, Global Avg Loss: 1.49316689, Time: 1.2393
+Steps: 2636000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2640000, Sample Num: 2640000, Cur Loss: 0.74302852, Log Avg loss: 0.86116761, Global Avg Loss: 1.49220931, Time: 1.4433
+Steps: 2640000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2644000, Sample Num: 2644000, Cur Loss: 1.12004435, Log Avg loss: 0.86328659, Global Avg Loss: 1.49125784, Time: 1.0825
+Steps: 2644000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2648000, Sample Num: 2648000, Cur Loss: 0.56735122, Log Avg loss: 0.86236731, Global Avg Loss: 1.49030786, Time: 1.7808
+Steps: 2648000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2652000, Sample Num: 2652000, Cur Loss: 0.48445484, Log Avg loss: 0.85988193, Global Avg Loss: 1.48935699, Time: 0.7479
+Steps: 2652000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2656000, Sample Num: 2656000, Cur Loss: 0.82113975, Log Avg loss: 0.85227432, Global Avg Loss: 1.48839753, Time: 0.9313
+Steps: 2656000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2660000, Sample Num: 2660000, Cur Loss: 0.46429175, Log Avg loss: 0.85622108, Global Avg Loss: 1.48744688, Time: 0.5760
+Steps: 2660000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2664000, Sample Num: 2664000, Cur Loss: 0.82947451, Log Avg loss: 0.86333900, Global Avg Loss: 1.48650979, Time: 1.0700
+Steps: 2664000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2668000, Sample Num: 2668000, Cur Loss: 1.15587699, Log Avg loss: 0.85253658, Global Avg Loss: 1.48555930, Time: 2.1736
+Steps: 2668000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2672000, Sample Num: 2672000, Cur Loss: 0.47425443, Log Avg loss: 0.85190548, Global Avg Loss: 1.48461072, Time: 0.8243
+Steps: 2672000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2676000, Sample Num: 2676000, Cur Loss: 0.78806084, Log Avg loss: 0.85233552, Global Avg Loss: 1.48366561, Time: 2.1573
+Steps: 2676000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2680000, Sample Num: 2680000, Cur Loss: 0.35936692, Log Avg loss: 0.86452648, Global Avg Loss: 1.48274152, Time: 0.5615
+Steps: 2680000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2684000, Sample Num: 2684000, Cur Loss: 1.05180979, Log Avg loss: 0.85874068, Global Avg Loss: 1.48181157, Time: 1.0810
+Steps: 2684000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2688000, Sample Num: 2688000, Cur Loss: 0.42731720, Log Avg loss: 0.86670001, Global Avg Loss: 1.48089622, Time: 0.5573
+Steps: 2688000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2692000, Sample Num: 2692000, Cur Loss: 0.78446394, Log Avg loss: 0.85982365, Global Avg Loss: 1.47997338, Time: 1.7559
+Steps: 2692000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2696000, Sample Num: 2696000, Cur Loss: 0.82185143, Log Avg loss: 0.86246557, Global Avg Loss: 1.47905720, Time: 0.9813
+Steps: 2696000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2700000, Sample Num: 2700000, Cur Loss: 0.78977484, Log Avg loss: 0.86722963, Global Avg Loss: 1.47815079, Time: 2.3700
+Steps: 2700000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2704000, Sample Num: 2704000, Cur Loss: 0.53183424, Log Avg loss: 0.84335319, Global Avg Loss: 1.47721174, Time: 1.9409
+Steps: 2704000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2708000, Sample Num: 2708000, Cur Loss: 0.87921458, Log Avg loss: 0.85171108, Global Avg Loss: 1.47628781, Time: 1.5612
+Steps: 2708000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2712000, Sample Num: 2712000, Cur Loss: 1.39199996, Log Avg loss: 0.85832128, Global Avg Loss: 1.47537635, Time: 1.0848
+Steps: 2712000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2716000, Sample Num: 2716000, Cur Loss: 0.96715981, Log Avg loss: 0.84576025, Global Avg Loss: 1.47444908, Time: 1.0823
+Steps: 2716000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2720000, Sample Num: 2720000, Cur Loss: 0.54549861, Log Avg loss: 0.85844518, Global Avg Loss: 1.47354319, Time: 0.8846
+Steps: 2720000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2724000, Sample Num: 2724000, Cur Loss: 1.40276885, Log Avg loss: 0.86055046, Global Avg Loss: 1.47264306, Time: 1.0817
+Steps: 2724000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2728000, Sample Num: 2728000, Cur Loss: 0.50686800, Log Avg loss: 0.86527970, Global Avg Loss: 1.47175250, Time: 2.0066
+Steps: 2728000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2732000, Sample Num: 2732000, Cur Loss: 0.79554325, Log Avg loss: 0.85465335, Global Avg Loss: 1.47084898, Time: 1.8883
+Steps: 2732000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2736000, Sample Num: 2736000, Cur Loss: 0.28109196, Log Avg loss: 0.85754421, Global Avg Loss: 1.46995234, Time: 1.6838
+Steps: 2736000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2740000, Sample Num: 2740000, Cur Loss: 0.80655724, Log Avg loss: 0.85558719, Global Avg Loss: 1.46905546, Time: 1.5887
+Steps: 2740000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2744000, Sample Num: 2744000, Cur Loss: 0.89466727, Log Avg loss: 0.85659689, Global Avg Loss: 1.46816266, Time: 0.8900
+Steps: 2744000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2748000, Sample Num: 2748000, Cur Loss: 0.51083428, Log Avg loss: 0.86319073, Global Avg Loss: 1.46728206, Time: 0.9524
+Steps: 2748000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2752000, Sample Num: 2752000, Cur Loss: 1.08814633, Log Avg loss: 0.85510431, Global Avg Loss: 1.46639227, Time: 1.6323
+Steps: 2752000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2756000, Sample Num: 2756000, Cur Loss: 0.53442401, Log Avg loss: 0.84728550, Global Avg Loss: 1.46549371, Time: 1.1610
+Steps: 2756000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2760000, Sample Num: 2760000, Cur Loss: 0.80818629, Log Avg loss: 0.86509607, Global Avg Loss: 1.46462357, Time: 1.2506
+Steps: 2760000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2764000, Sample Num: 2764000, Cur Loss: 1.27017438, Log Avg loss: 0.85712047, Global Avg Loss: 1.46374440, Time: 1.0905
+Steps: 2764000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2768000, Sample Num: 2768000, Cur Loss: 0.82703125, Log Avg loss: 0.86350461, Global Avg Loss: 1.46287700, Time: 0.7744
+Steps: 2768000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2772000, Sample Num: 2772000, Cur Loss: 0.72515482, Log Avg loss: 0.84520818, Global Avg Loss: 1.46198570, Time: 0.7189
+Steps: 2772000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2776000, Sample Num: 2776000, Cur Loss: 0.64523053, Log Avg loss: 0.85957395, Global Avg Loss: 1.46111768, Time: 1.8161
+Steps: 2776000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2780000, Sample Num: 2780000, Cur Loss: 1.00982964, Log Avg loss: 0.85847983, Global Avg Loss: 1.46025057, Time: 2.1496
+Steps: 2780000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2784000, Sample Num: 2784000, Cur Loss: 1.44040024, Log Avg loss: 0.85156999, Global Avg Loss: 1.45937603, Time: 1.3589
+Steps: 2784000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2788000, Sample Num: 2788000, Cur Loss: 0.24532279, Log Avg loss: 0.85031703, Global Avg Loss: 1.45850220, Time: 1.3565
+Steps: 2788000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2792000, Sample Num: 2792000, Cur Loss: 1.39738536, Log Avg loss: 0.84710392, Global Avg Loss: 1.45762627, Time: 1.3924
+Steps: 2792000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2796000, Sample Num: 2796000, Cur Loss: 1.69160306, Log Avg loss: 0.84894676, Global Avg Loss: 1.45675549, Time: 2.0592
+Steps: 2796000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2800000, Sample Num: 2800000, Cur Loss: 0.88306201, Log Avg loss: 0.86694328, Global Avg Loss: 1.45591290, Time: 1.3052
+Steps: 2800000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2804000, Sample Num: 2804000, Cur Loss: 0.93410325, Log Avg loss: 0.85459812, Global Avg Loss: 1.45505510, Time: 2.0972
+Steps: 2804000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2808000, Sample Num: 2808000, Cur Loss: 0.55055940, Log Avg loss: 0.84813945, Global Avg Loss: 1.45419055, Time: 1.9918
+Steps: 2808000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2812000, Sample Num: 2812000, Cur Loss: 0.66966480, Log Avg loss: 0.85297753, Global Avg Loss: 1.45333534, Time: 1.6041
+Steps: 2812000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2816000, Sample Num: 2816000, Cur Loss: 0.66409218, Log Avg loss: 0.85219023, Global Avg Loss: 1.45248144, Time: 0.8938
+Steps: 2816000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2820000, Sample Num: 2820000, Cur Loss: 0.58932382, Log Avg loss: 0.84338653, Global Avg Loss: 1.45161748, Time: 2.0859
+Steps: 2820000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2824000, Sample Num: 2824000, Cur Loss: 1.58893132, Log Avg loss: 0.85524401, Global Avg Loss: 1.45077275, Time: 1.1300
+Steps: 2824000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2828000, Sample Num: 2828000, Cur Loss: 0.81733358, Log Avg loss: 0.85281108, Global Avg Loss: 1.44992698, Time: 1.3477
+Steps: 2828000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2832000, Sample Num: 2832000, Cur Loss: 0.83571243, Log Avg loss: 0.85513642, Global Avg Loss: 1.44908688, Time: 0.7590
+Steps: 2832000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2836000, Sample Num: 2836000, Cur Loss: 1.29543459, Log Avg loss: 0.84787194, Global Avg Loss: 1.44823890, Time: 1.0871
+Steps: 2836000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2840000, Sample Num: 2840000, Cur Loss: 1.15971208, Log Avg loss: 0.84189366, Global Avg Loss: 1.44738490, Time: 1.4800
+Steps: 2840000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2844000, Sample Num: 2844000, Cur Loss: 0.86913365, Log Avg loss: 0.85850722, Global Avg Loss: 1.44655666, Time: 0.9992
+Steps: 2844000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2848000, Sample Num: 2848000, Cur Loss: 1.03329134, Log Avg loss: 0.85429937, Global Avg Loss: 1.44572484, Time: 2.0331
+Steps: 2848000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2852000, Sample Num: 2852000, Cur Loss: 0.41951975, Log Avg loss: 0.84571389, Global Avg Loss: 1.44488331, Time: 0.5543
+Steps: 2852000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2856000, Sample Num: 2856000, Cur Loss: 0.64574271, Log Avg loss: 0.84978212, Global Avg Loss: 1.44404983, Time: 0.8878
+Steps: 2856000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2860000, Sample Num: 2860000, Cur Loss: 0.29262507, Log Avg loss: 0.84602285, Global Avg Loss: 1.44321343, Time: 1.1771
+Steps: 2860000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2864000, Sample Num: 2864000, Cur Loss: 0.87948179, Log Avg loss: 0.83931293, Global Avg Loss: 1.44236999, Time: 1.0724
+Steps: 2864000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2868000, Sample Num: 2868000, Cur Loss: 1.11519897, Log Avg loss: 0.84525220, Global Avg Loss: 1.44153719, Time: 1.3336
+Steps: 2868000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2872000, Sample Num: 2872000, Cur Loss: 0.87119204, Log Avg loss: 0.85613773, Global Avg Loss: 1.44072187, Time: 1.8655
+Steps: 2872000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2876000, Sample Num: 2876000, Cur Loss: 1.70065451, Log Avg loss: 0.84010895, Global Avg Loss: 1.43988653, Time: 1.5410
+Steps: 2876000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2880000, Sample Num: 2880000, Cur Loss: 0.77844143, Log Avg loss: 0.85803653, Global Avg Loss: 1.43907840, Time: 1.5345
+Steps: 2880000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2884000, Sample Num: 2884000, Cur Loss: 0.74403685, Log Avg loss: 0.84007652, Global Avg Loss: 1.43824761, Time: 1.2372
+Steps: 2884000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2888000, Sample Num: 2888000, Cur Loss: 0.81892341, Log Avg loss: 0.85613276, Global Avg Loss: 1.43744136, Time: 1.0497
+Steps: 2888000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2892000, Sample Num: 2892000, Cur Loss: 0.57613975, Log Avg loss: 0.84225837, Global Avg Loss: 1.43661814, Time: 1.8754
+Steps: 2892000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2896000, Sample Num: 2896000, Cur Loss: 0.72276855, Log Avg loss: 0.84616699, Global Avg Loss: 1.43580260, Time: 2.1943
+Steps: 2896000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2900000, Sample Num: 2900000, Cur Loss: 0.90110081, Log Avg loss: 0.85166092, Global Avg Loss: 1.43499689, Time: 1.0383
+Steps: 2900000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2904000, Sample Num: 2904000, Cur Loss: 1.15572464, Log Avg loss: 0.85601851, Global Avg Loss: 1.43419940, Time: 1.6965
+Steps: 2904000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2908000, Sample Num: 2908000, Cur Loss: 0.43893638, Log Avg loss: 0.84788620, Global Avg Loss: 1.43339292, Time: 0.7755
+Steps: 2908000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2912000, Sample Num: 2912000, Cur Loss: 0.83230519, Log Avg loss: 0.84297805, Global Avg Loss: 1.43258191, Time: 1.5750
+Steps: 2912000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2916000, Sample Num: 2916000, Cur Loss: 0.75955391, Log Avg loss: 0.84450207, Global Avg Loss: 1.43177521, Time: 1.1912
+Steps: 2916000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2920000, Sample Num: 2920000, Cur Loss: 0.51981449, Log Avg loss: 0.84489372, Global Avg Loss: 1.43097127, Time: 0.7684
+Steps: 2920000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2924000, Sample Num: 2924000, Cur Loss: 1.32695305, Log Avg loss: 0.84373333, Global Avg Loss: 1.43016793, Time: 1.3793
+Steps: 2924000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2928000, Sample Num: 2928000, Cur Loss: 0.98219478, Log Avg loss: 0.84817787, Global Avg Loss: 1.42937286, Time: 1.3507
+Steps: 2928000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2932000, Sample Num: 2932000, Cur Loss: 1.02124178, Log Avg loss: 0.84830081, Global Avg Loss: 1.42858013, Time: 1.8166
+Steps: 2932000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2936000, Sample Num: 2936000, Cur Loss: 0.37961307, Log Avg loss: 0.85460763, Global Avg Loss: 1.42779815, Time: 0.6427
+Steps: 2936000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2940000, Sample Num: 2940000, Cur Loss: 0.76931900, Log Avg loss: 0.84644657, Global Avg Loss: 1.42700720, Time: 2.0275
+Steps: 2940000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2944000, Sample Num: 2944000, Cur Loss: 0.59436363, Log Avg loss: 0.84416760, Global Avg Loss: 1.42621530, Time: 0.6023
+Steps: 2944000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2948000, Sample Num: 2948000, Cur Loss: 0.59251136, Log Avg loss: 0.84004575, Global Avg Loss: 1.42541995, Time: 0.7507
+Steps: 2948000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2952000, Sample Num: 2952000, Cur Loss: 0.44589218, Log Avg loss: 0.84920453, Global Avg Loss: 1.42463917, Time: 1.6213
+Steps: 2952000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2956000, Sample Num: 2956000, Cur Loss: 0.87058491, Log Avg loss: 0.84770328, Global Avg Loss: 1.42385847, Time: 0.8878
+Steps: 2956000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2960000, Sample Num: 2960000, Cur Loss: 0.93184906, Log Avg loss: 0.84834525, Global Avg Loss: 1.42308075, Time: 1.0811
+Steps: 2960000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2964000, Sample Num: 2964000, Cur Loss: 0.79161972, Log Avg loss: 0.83932289, Global Avg Loss: 1.42229296, Time: 1.6302
+Steps: 2964000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2968000, Sample Num: 2968000, Cur Loss: 0.60741663, Log Avg loss: 0.84413932, Global Avg Loss: 1.42151377, Time: 0.7039
+Steps: 2968000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2972000, Sample Num: 2972000, Cur Loss: 0.74281913, Log Avg loss: 0.84249469, Global Avg Loss: 1.42073447, Time: 0.6198
+Steps: 2972000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2976000, Sample Num: 2976000, Cur Loss: 0.62618786, Log Avg loss: 0.83819811, Global Avg Loss: 1.41995150, Time: 1.5570
+Steps: 2976000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2980000, Sample Num: 2980000, Cur Loss: 1.05792975, Log Avg loss: 0.85790774, Global Avg Loss: 1.41919707, Time: 1.5087
+Steps: 2980000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2984000, Sample Num: 2984000, Cur Loss: 1.16324162, Log Avg loss: 0.84586085, Global Avg Loss: 1.41842853, Time: 0.9839
+Steps: 2984000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2988000, Sample Num: 2988000, Cur Loss: 0.65274704, Log Avg loss: 0.85128302, Global Avg Loss: 1.41766930, Time: 0.6944
+Steps: 2988000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2992000, Sample Num: 2992000, Cur Loss: 0.91667348, Log Avg loss: 0.84472341, Global Avg Loss: 1.41690333, Time: 1.0008
+Steps: 2992000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 2996000, Sample Num: 2996000, Cur Loss: 1.83854997, Log Avg loss: 0.84492113, Global Avg Loss: 1.41613966, Time: 1.0858
+Steps: 2996000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3000000, Sample Num: 3000000, Cur Loss: 0.80606580, Log Avg loss: 0.85098358, Global Avg Loss: 1.41538612, Time: 1.1501
+Steps: 3000000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3004000, Sample Num: 3004000, Cur Loss: 0.83339226, Log Avg loss: 0.84915041, Global Avg Loss: 1.41463215, Time: 0.9839
+Steps: 3004000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3008000, Sample Num: 3008000, Cur Loss: 0.75670177, Log Avg loss: 0.84666064, Global Avg Loss: 1.41387687, Time: 0.4997
+Steps: 3008000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3012000, Sample Num: 3012000, Cur Loss: 0.50440532, Log Avg loss: 0.84615711, Global Avg Loss: 1.41312292, Time: 1.6443
+Steps: 3012000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3016000, Sample Num: 3016000, Cur Loss: 1.09602308, Log Avg loss: 0.84171778, Global Avg Loss: 1.41236509, Time: 1.0910
+Steps: 3016000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3020000, Sample Num: 3020000, Cur Loss: 1.97954941, Log Avg loss: 0.85342287, Global Avg Loss: 1.41162477, Time: 1.0825
+Steps: 3020000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3024000, Sample Num: 3024000, Cur Loss: 0.98644751, Log Avg loss: 0.85609041, Global Avg Loss: 1.41088994, Time: 1.9213
+Steps: 3024000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3028000, Sample Num: 3028000, Cur Loss: 1.20237541, Log Avg loss: 0.84324904, Global Avg Loss: 1.41014008, Time: 1.0864
+Steps: 3028000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3032000, Sample Num: 3032000, Cur Loss: 0.41618460, Log Avg loss: 0.84528304, Global Avg Loss: 1.40939489, Time: 1.4929
+Steps: 3032000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3036000, Sample Num: 3036000, Cur Loss: 0.42612922, Log Avg loss: 0.84585491, Global Avg Loss: 1.40865241, Time: 0.7894
+Steps: 3036000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3040000, Sample Num: 3040000, Cur Loss: 0.54060829, Log Avg loss: 0.83597251, Global Avg Loss: 1.40789888, Time: 1.3478
+Steps: 3040000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3044000, Sample Num: 3044000, Cur Loss: 0.82108057, Log Avg loss: 0.84255672, Global Avg Loss: 1.40715599, Time: 0.7941
+Steps: 3044000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3048000, Sample Num: 3048000, Cur Loss: 1.49255323, Log Avg loss: 0.84334519, Global Avg Loss: 1.40641608, Time: 1.8121
+Steps: 3048000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3052000, Sample Num: 3052000, Cur Loss: 0.91354567, Log Avg loss: 0.83822676, Global Avg Loss: 1.40567140, Time: 1.0903
+Steps: 3052000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3056000, Sample Num: 3056000, Cur Loss: 0.65292764, Log Avg loss: 0.83693272, Global Avg Loss: 1.40492698, Time: 1.4043
+Steps: 3056000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3060000, Sample Num: 3060000, Cur Loss: 1.49404550, Log Avg loss: 0.84218257, Global Avg Loss: 1.40419137, Time: 2.3061
+Steps: 3060000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3064000, Sample Num: 3064000, Cur Loss: 0.73887879, Log Avg loss: 0.83010669, Global Avg Loss: 1.40344191, Time: 0.8718
+Steps: 3064000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3068000, Sample Num: 3068000, Cur Loss: 1.02661467, Log Avg loss: 0.85573199, Global Avg Loss: 1.40272781, Time: 0.9220
+Steps: 3068000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3072000, Sample Num: 3072000, Cur Loss: 0.55171841, Log Avg loss: 0.84025037, Global Avg Loss: 1.40199542, Time: 0.6421
+Steps: 3072000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3076000, Sample Num: 3076000, Cur Loss: 0.51156127, Log Avg loss: 0.85196864, Global Avg Loss: 1.40128017, Time: 1.3668
+Steps: 3076000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3080000, Sample Num: 3080000, Cur Loss: 0.77509958, Log Avg loss: 0.84755612, Global Avg Loss: 1.40056105, Time: 1.0223
+Steps: 3080000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3084000, Sample Num: 3084000, Cur Loss: 0.87792802, Log Avg loss: 0.83584916, Global Avg Loss: 1.39982861, Time: 2.2610
+Steps: 3084000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3088000, Sample Num: 3088000, Cur Loss: 0.73705822, Log Avg loss: 0.84230509, Global Avg Loss: 1.39910643, Time: 1.2459
+Steps: 3088000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3092000, Sample Num: 3092000, Cur Loss: 0.56397384, Log Avg loss: 0.84298747, Global Avg Loss: 1.39838700, Time: 1.0262
+Steps: 3092000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3096000, Sample Num: 3096000, Cur Loss: 1.00668538, Log Avg loss: 0.84877204, Global Avg Loss: 1.39767690, Time: 0.9936
+Steps: 3096000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3100000, Sample Num: 3100000, Cur Loss: 0.21948263, Log Avg loss: 0.84617246, Global Avg Loss: 1.39696528, Time: 0.4996
+Steps: 3100000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3104000, Sample Num: 3104000, Cur Loss: 1.43154967, Log Avg loss: 0.85141104, Global Avg Loss: 1.39626225, Time: 1.6264
+Steps: 3104000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3108000, Sample Num: 3108000, Cur Loss: 0.89324194, Log Avg loss: 0.83881132, Global Avg Loss: 1.39554481, Time: 1.7500
+Steps: 3108000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3112000, Sample Num: 3112000, Cur Loss: 0.77614927, Log Avg loss: 0.84512476, Global Avg Loss: 1.39483733, Time: 0.7952
+Steps: 3112000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3116000, Sample Num: 3116000, Cur Loss: 0.99084198, Log Avg loss: 0.84519160, Global Avg Loss: 1.39413175, Time: 1.6627
+Steps: 3116000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3120000, Sample Num: 3120000, Cur Loss: 0.93623167, Log Avg loss: 0.84435503, Global Avg Loss: 1.39342691, Time: 0.8437
+Steps: 3120000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3124000, Sample Num: 3124000, Cur Loss: 0.76338464, Log Avg loss: 0.83733491, Global Avg Loss: 1.39271488, Time: 1.6044
+Steps: 3124000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3128000, Sample Num: 3128000, Cur Loss: 0.79922462, Log Avg loss: 0.84501354, Global Avg Loss: 1.39201450, Time: 0.7734
+Steps: 3128000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3132000, Sample Num: 3132000, Cur Loss: 0.90372133, Log Avg loss: 0.83918153, Global Avg Loss: 1.39130845, Time: 2.2861
+Steps: 3132000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3136000, Sample Num: 3136000, Cur Loss: 0.48596916, Log Avg loss: 0.83334794, Global Avg Loss: 1.39059677, Time: 0.7662
+Steps: 3136000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3140000, Sample Num: 3140000, Cur Loss: 1.07405865, Log Avg loss: 0.84550018, Global Avg Loss: 1.38990238, Time: 2.0940
+Steps: 3140000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3144000, Sample Num: 3144000, Cur Loss: 0.93850565, Log Avg loss: 0.84580792, Global Avg Loss: 1.38921015, Time: 0.8669
+Steps: 3144000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3148000, Sample Num: 3148000, Cur Loss: 0.69580919, Log Avg loss: 0.82460021, Global Avg Loss: 1.38849273, Time: 1.3355
+Steps: 3148000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3152000, Sample Num: 3152000, Cur Loss: 1.27604294, Log Avg loss: 0.83373863, Global Avg Loss: 1.38778872, Time: 2.1002
+Steps: 3152000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3156000, Sample Num: 3156000, Cur Loss: 1.88745713, Log Avg loss: 0.84565203, Global Avg Loss: 1.38710160, Time: 1.0857
+Steps: 3156000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3160000, Sample Num: 3160000, Cur Loss: 0.89953274, Log Avg loss: 0.83683579, Global Avg Loss: 1.38640507, Time: 1.0933
+Steps: 3160000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3164000, Sample Num: 3164000, Cur Loss: 1.03678632, Log Avg loss: 0.84274738, Global Avg Loss: 1.38571776, Time: 2.2394
+Steps: 3164000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3168000, Sample Num: 3168000, Cur Loss: 1.11817181, Log Avg loss: 0.83263746, Global Avg Loss: 1.38501943, Time: 1.9217
+Steps: 3168000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3172000, Sample Num: 3172000, Cur Loss: 0.69823027, Log Avg loss: 0.83956762, Global Avg Loss: 1.38433159, Time: 0.8952
+Steps: 3172000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3176000, Sample Num: 3176000, Cur Loss: 1.45267320, Log Avg loss: 0.84018734, Global Avg Loss: 1.38364627, Time: 1.2697
+Steps: 3176000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3180000, Sample Num: 3180000, Cur Loss: 0.98431212, Log Avg loss: 0.84392368, Global Avg Loss: 1.38296738, Time: 1.0860
+Steps: 3180000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3184000, Sample Num: 3184000, Cur Loss: 0.54684252, Log Avg loss: 0.83513904, Global Avg Loss: 1.38227915, Time: 0.8213
+Steps: 3184000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3188000, Sample Num: 3188000, Cur Loss: 0.82998472, Log Avg loss: 0.84675102, Global Avg Loss: 1.38160722, Time: 1.4339
+Steps: 3188000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3192000, Sample Num: 3192000, Cur Loss: 0.62442684, Log Avg loss: 0.84088494, Global Avg Loss: 1.38092962, Time: 1.5272
+Steps: 3192000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3196000, Sample Num: 3196000, Cur Loss: 0.51898569, Log Avg loss: 0.85004169, Global Avg Loss: 1.38026518, Time: 0.5251
+Steps: 3196000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3200000, Sample Num: 3200000, Cur Loss: 0.92645043, Log Avg loss: 0.84652356, Global Avg Loss: 1.37959801, Time: 1.0403
+Steps: 3200000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3204000, Sample Num: 3204000, Cur Loss: 1.01927805, Log Avg loss: 0.82499855, Global Avg Loss: 1.37890562, Time: 1.2267
+Steps: 3204000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3208000, Sample Num: 3208000, Cur Loss: 0.23994271, Log Avg loss: 0.83485090, Global Avg Loss: 1.37822725, Time: 0.5003
+Steps: 3208000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3212000, Sample Num: 3212000, Cur Loss: 0.67253089, Log Avg loss: 0.84136438, Global Avg Loss: 1.37755868, Time: 1.5285
+Steps: 3212000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3216000, Sample Num: 3216000, Cur Loss: 0.69380206, Log Avg loss: 0.82453538, Global Avg Loss: 1.37687084, Time: 0.8104
+Steps: 3216000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3220000, Sample Num: 3220000, Cur Loss: 0.81799108, Log Avg loss: 0.84035255, Global Avg Loss: 1.37620436, Time: 1.8222
+Steps: 3220000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3224000, Sample Num: 3224000, Cur Loss: 0.70776075, Log Avg loss: 0.83359622, Global Avg Loss: 1.37553115, Time: 1.5024
+Steps: 3224000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3228000, Sample Num: 3228000, Cur Loss: 1.01959348, Log Avg loss: 0.84101765, Global Avg Loss: 1.37486880, Time: 1.7964
+Steps: 3228000, Updated lr: 0.000248
+Training, Epoch: 0001, Batch: 3232000, Sample Num: 3232000, Cur Loss: 0.66770345, Log Avg loss: 0.84294470, Global Avg Loss: 1.37421048, Time: 0.7512
+Steps: 3232000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3236000, Sample Num: 3236000, Cur Loss: 0.38273257, Log Avg loss: 0.83749677, Global Avg Loss: 1.37354705, Time: 0.4900
+Steps: 3236000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3240000, Sample Num: 3240000, Cur Loss: 1.04003203, Log Avg loss: 0.83765454, Global Avg Loss: 1.37288545, Time: 1.8326
+Steps: 3240000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3244000, Sample Num: 3244000, Cur Loss: 0.55249697, Log Avg loss: 0.83568455, Global Avg Loss: 1.37222306, Time: 1.1641
+Steps: 3244000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3248000, Sample Num: 3248000, Cur Loss: 1.58373964, Log Avg loss: 0.83333931, Global Avg Loss: 1.37155941, Time: 1.0775
+Steps: 3248000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3252000, Sample Num: 3252000, Cur Loss: 1.24612415, Log Avg loss: 0.83051945, Global Avg Loss: 1.37089392, Time: 1.0938
+Steps: 3252000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3256000, Sample Num: 3256000, Cur Loss: 0.65744388, Log Avg loss: 0.83749810, Global Avg Loss: 1.37023865, Time: 1.7118
+Steps: 3256000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3260000, Sample Num: 3260000, Cur Loss: 0.58297819, Log Avg loss: 0.82728918, Global Avg Loss: 1.36957245, Time: 1.0864
+Steps: 3260000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3264000, Sample Num: 3264000, Cur Loss: 0.96973211, Log Avg loss: 0.83783889, Global Avg Loss: 1.36892082, Time: 2.3608
+Steps: 3264000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3268000, Sample Num: 3268000, Cur Loss: 1.02417743, Log Avg loss: 0.83672848, Global Avg Loss: 1.36826942, Time: 1.4932
+Steps: 3268000, Updated lr: 0.000247
+Training, Epoch: 0001, Batch: 3272000, Sample Num: 3272000, Cur Loss: 1.11486149, Log Avg loss: 0.83922916, Global Avg Loss: 1.36762267, Time: 1.8686
+Steps: 3272000, Updated lr: 0.000247

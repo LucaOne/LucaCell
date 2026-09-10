@@ -1,0 +1,220 @@
+#!/usr/bin/env python
+# encoding: utf-8
+'''
+@license: (C) Copyright 2021, Hey.
+@author: Hey
+@email: sanyuan.hy@alibaba-inc.com
+@tel: 137****6540
+@datetime: 2023/7/24 11:00
+@project: LucaOne
+@file: alphabet.py
+@desc: alphabet for Nucleo and Protein
+'''
+import itertools
+from typing import Sequence, List
+
+ATCGU = {"A", "T", "C", "G", "U"}
+
+gene_standard_toks = ['1', '2', '3', '4', '5', '.', '-', '*']
+
+prot_standard_toks = ['L', 'A', 'G', 'V', 'S', 'E', 'R', 'T', 'I', 'D', 'P', 'K', 'Q', 'N', 'F', 'Y', 'M', 'H', 'W', 'C', 'X', 'B', 'U', 'Z', 'O', 'J', '.', '-', '*']
+
+gene_prot_standard_toks = ['1', '2', '3', '4', '5', 'L', 'A', 'G', 'V', 'S', 'E', 'R', 'T', 'I', 'D', 'P', 'K', 'Q', 'N', 'F', 'Y', 'M', 'H', 'W', 'C', 'X', 'B', 'U', 'Z', 'O', 'J', '.', '-', '*']
+
+gene_prot_prepend_toks = ['[PAD]', '[UNK]']
+
+gene_prot_append_toks = ['[CLS]', '[SEP]', '[MASK]']
+
+
+class Alphabet(object):
+    def __init__(
+            self,
+            standard_toks: Sequence[str],
+            prepend_toks: Sequence[str] = gene_prot_prepend_toks,
+            append_toks: Sequence[str] = gene_prot_append_toks,
+            prepend_bos: bool = True,
+            append_eos: bool = True
+    ):
+        self.standard_toks = list(standard_toks)
+        self.prepend_toks = list(prepend_toks)
+        self.append_toks = list(append_toks)
+        self.prepend_bos = prepend_bos
+        self.append_eos = append_eos
+
+        self.all_toks = list(self.prepend_toks)
+        self.all_toks.extend(self.append_toks)
+        self.all_toks.extend(self.standard_toks)
+
+        self.tok_to_idx = {tok: i for i, tok in enumerate(self.all_toks)}
+
+        self.unk_idx = self.tok_to_idx["[UNK]"]
+        self.padding_idx = self.get_idx("[PAD]")
+        self.pad_token_id = self.padding_idx
+        self.cls_idx = self.get_idx("[CLS]")
+        self.mask_idx = self.get_idx("[MASK]")
+        self.eos_idx = self.get_idx("[SEP]")
+        self.all_special_tokens = prepend_toks + append_toks
+        self.all_special_token_idx_list = [self.tok_to_idx[v] for v in self.all_special_tokens]
+        self.unique_no_split_tokens = self.all_toks
+        self.vocab_size = self.__len__()
+
+    def __len__(self):
+        return len(self.all_toks)
+
+    def get_idx(self, tok):
+        return self.tok_to_idx.get(tok, self.unk_idx)
+
+    def get_tok(self, ind):
+        return self.all_toks[ind]
+
+    def to_dict(self):
+        return self.tok_to_idx.copy()
+
+    @classmethod
+    def from_predefined(cls, name: str):
+        if name.lower() == "prot":
+            standard_toks = prot_standard_toks
+        elif name.lower() == "gene":
+            standard_toks = gene_standard_toks
+        elif name.lower() in ["gene_prot", "prot_gene"]:
+            standard_toks = gene_prot_standard_toks
+        else:
+            raise Exception("Not support tokenizer name: %s" % name)
+
+        prepend_toks = gene_prot_prepend_toks
+        append_toks = gene_prot_append_toks
+        prepend_bos = True
+        append_eos = True
+
+        return cls(standard_toks, prepend_toks, append_toks, prepend_bos, append_eos)
+
+    @classmethod
+    def from_pretrained(cls, dir_path):
+        import os, pickle
+        return pickle.load(open(os.path.join(dir_path, "alphabet.pkl"), "rb"))
+
+    def save_pretrained(self, save_dir):
+        import os, pickle
+        with open(os.path.join(save_dir, "alphabet.pkl"), 'wb') as outp:
+            pickle.dump(self, outp, pickle.HIGHEST_PROTOCOL)
+
+    def _tokenize(self, seq) -> str:
+        return seq.split()
+
+    def tokenize(self, seq, **kwargs) -> List[str]:
+        def split_on_token(tok, seq):
+            result = []
+            split_seq = seq.split(tok)
+            for i, sub_seq in enumerate(split_seq):
+                if i < len(split_seq) - 1:
+                    sub_seq = sub_seq.rstrip()
+                if i > 0:
+                    sub_seq = sub_seq.lstrip()
+
+                if i == 0 and not sub_seq:
+                    result.append(tok)
+                elif i == len(split_seq) - 1:
+                    if sub_seq:
+                        result.append(sub_seq)
+                    else:
+                        pass
+                else:
+                    if sub_seq:
+                        result.append(sub_seq)
+                    result.append(tok)
+            return result
+
+        def split_on_tokens(tok_list, seq):
+            if not seq.strip():
+                return []
+            tokenized_seq = []
+            seq_list = [seq]
+            for tok in tok_list:
+                tokenized_seq = []
+                for sub_seq in seq_list:
+                    if sub_seq not in self.unique_no_split_tokens:
+                        tokenized_seq.extend(split_on_token(tok, sub_seq))
+                    else:
+                        tokenized_seq.append(sub_seq)
+                seq_list = tokenized_seq
+
+            return list(
+                itertools.chain.from_iterable(
+                    (
+                        self._tokenize(token)
+                        if token not in self.unique_no_split_tokens
+                        else [token]
+                        for token in tokenized_seq
+                    )
+                )
+            )
+
+        no_split_token = self.unique_no_split_tokens
+        tokenized_seq = split_on_tokens(no_split_token, seq)
+        return tokenized_seq
+
+    @classmethod
+    def gene_seq_replace(cls, seq_type: str, seq: str):
+        """
+        核酸替换（与蛋白质不overlap）
+        :param seq_type:
+        :param seq:
+        :return:
+        """
+        seq = seq.strip().upper()
+        seq_type = seq_type.lower()
+        if seq_type in ["gene", "nucl", "dna", "rna"]:
+            new_seq = ""
+            for ch in seq:
+                if ch in ["A", "a"]:
+                    new_seq += "1"
+                elif ch in ["T", "U", "t", "u"]:
+                    new_seq += "2"
+                elif ch in ["C", "c"]:
+                    new_seq += "3"
+                elif ch in ["G", "g"]:
+                    new_seq += "4"
+                else:
+                    # unknown
+                    new_seq += "5"
+            return new_seq
+        elif "prot" in seq_type:
+            return seq
+        else:
+            raise Exception("Not support this seq_type=%s" % seq_type)
+
+    @classmethod
+    def gene_seq_restore(cls, seq_type: str, seq: str):
+        """
+        核酸序列还原
+        :param seq_type:
+        :param seq:
+        :return:
+        """
+        seq = seq.strip().upper()
+        seq_type = seq_type.lower()
+        if seq_type in ["gene", "nucl", "dna", "rna"]:
+            new_seq = ""
+            for ch in seq:
+                if ch == '1':
+                    new_seq += "A"
+                elif ch == '2':
+                    new_seq += "T"
+                elif ch == '3':
+                    new_seq += "C"
+                elif ch == '4':
+                    new_seq += "G"
+                else: # unknown
+                    new_seq += "N"
+            return new_seq
+        elif "prot" in seq_type:
+            return seq
+        else:
+            raise Exception("Not support this seq_type=%s" % seq_type)
+
+    def encode(self, seq_type, seq):
+        if seq_type in ["gene", "dna", "rna", "nucleic_acid", "nucleotide"]:
+            seq = seq.upper()
+            if len(ATCGU & set(list(seq))) > 0:
+                seq = self.gene_seq_replace(seq_type, seq)
+        return [self.tok_to_idx[tok] for tok in self.tokenize(seq)]

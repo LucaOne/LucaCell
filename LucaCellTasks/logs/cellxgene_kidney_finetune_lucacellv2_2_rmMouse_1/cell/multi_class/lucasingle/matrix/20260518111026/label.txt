@@ -1,0 +1,12 @@
+label
+B cell
+Distal convoluted tubule
+Endothelial
+Intercalated cell
+Loop of Henle
+Myeloid
+Podocyte
+Principal cell
+Proximal tubule
+Stromal
+T cell

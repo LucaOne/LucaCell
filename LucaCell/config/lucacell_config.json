@@ -1,0 +1,31 @@
+{
+  "architectures": [
+    "LucaCell"
+  ],
+  "pretrain_task_name": "express_token_mask,express_sorted_mask",
+  "pretrain_task_weight": {"express_token_mask":  1.0, "express_sorted_mask":  1.0},
+  "alphabet_type": "nucleotide",
+  "embed_dim": 2560,
+  "ffn_size": 6912,
+  "nucleotide_token_encoder_num_attention_heads": 20,
+  "nucleotide_token_encoder_num_layers": 2,
+  "num_attention_heads": 20,
+  "num_layers": 10,
+  "no_nucleotide_token_embeddings": false,
+  "no_nucleotide_token_encoder": false,
+  "no_nucleotide_position_embeddings": true,
+  "max_nucleotide_position_embeddings": null,
+  "nucleotide_token_pooling_type": "value_attention",
+  "no_gene_positions_embeddings": true,
+  "max_gene_position_embeddings": null,
+  "no_express_sorted_embeddings": false,
+  "max_express_sorted_position_embeddings": 105,
+  "no_gene_type_embeddings": false,
+  "ignore_index": -100,
+  "use_rotary_embeddings": true,
+  "use_embed_layer_norm": false,
+  "use_last_layer_norm": true,
+  "embed_scale": 1.0,
+  "pretrained_model_name": "lucaone",
+  "mlm_probability": 0.15
+}
